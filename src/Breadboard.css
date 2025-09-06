@@ -1,0 +1,75 @@
+.breadboard {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  background-color: gray;
+  width: 900px;
+  height: 300px;
+}
+
+.outer-bus-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 23.5%
+}
+
+.charge-symbols {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* TODO: check this proportion */
+  width: 3%;
+}
+
+.charge-symbol {
+  /* TODO: make this a percentage of div size */
+  font-size: 30px;
+}
+
+.inner-bus-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  /* TODO: check both of these percentages */
+  height: 70%;
+  width: 94%;
+}
+
+hr {
+  margin: 0;
+}
+
+.bus-strips {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 100%;
+}
+
+.bus-strip {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.terminal-strips {
+  display: flex;
+  flex-direction: row;
+  height: 29.4%;
+}
+
+.terminal-strip {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+}
+
+.terminal {
+  background-color: black;
+  /* TODO: make these percentages of div size */
+  width: 5px;
+  height: 5px;
+}
