@@ -1,0 +1,124 @@
+$breadboard-color: gray;
+
+.breadboard {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  background-color: $breadboard-color;
+  width: 900px;
+  height: 300px;
+}
+
+.outer-bus-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 17.4%
+}
+
+.charge-symbols {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  /*  TODO: check this proportion */
+  width: 3%;
+}
+
+.charge-symbol {
+  transform: rotate(90deg);
+  font-family: arial;
+  /*  TODO: make this a percentage of div size */
+  font-size: 22px;
+}
+
+hr {
+  margin: 0;
+}
+
+.inner-bus-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /*  TODO: check both of these percentages */
+  height: 70%;
+  width: 94%;
+}
+
+.bus-strips {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 100%;
+}
+
+.bus-strip {
+  display: flex;
+  flex-direction: row;
+}
+
+.bus-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  /*  TODO: check this against full size breadboard */
+  width: 16.4%;
+}
+
+.teriminal-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.terminal-strips {
+  display: flex;
+  flex-direction: row;
+  height: 30.8%;
+  /*  NOTE: Putting left and right margins here fixes out of bounds letters */
+}
+
+.terminal-strip {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+}
+
+.number {
+  transform: rotate(270deg);
+  font-family: helvetica;
+  font-size: 9px;
+  height: 6px;
+}
+
+.letters {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  /*  TODO: Figure out whats going on here */
+  height: 100%;
+}
+
+.letter {
+  transform: rotate(270deg);
+  text-align: center;
+  font-family: helvetica;
+  font-size: .6em;
+  height: 6px;
+}
+
+.terminal {
+  background-color: $breadboard-color;
+  /*  TODO: make these percentages of div size */
+  width: 6px;
+  height: 6px;
+}
+
+#divider {
+  height: 3.6%;
+  background-color: black;
+}
