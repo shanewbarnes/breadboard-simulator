@@ -1,13 +1,19 @@
 import { useState } from 'react'
-import './Breadboard.css'
+import './Breadboard.scss'
+
+const terminalColor = "black";
 
 function Breadboard() {
+
+  const abcdeLabels = ["e", "d", "c", "b", "a"];
+  const fghijLabels = ["j", "i", "h", "g", "f"];
 
   return (
     <div className="breadboard">
       <BusStrips></BusStrips>
-      <TerminalStrips></TerminalStrips>
-      <TerminalStrips></TerminalStrips>
+      <TerminalStrips letterLabels={fghijLabels} topStripsFlag={true}></TerminalStrips>
+      <div id="divider"></div>
+      <TerminalStrips letterLabels={abcdeLabels} topStripsFlag={false}></TerminalStrips>
       <BusStrips></BusStrips>
     </div>
   )
@@ -16,20 +22,20 @@ function Breadboard() {
 function BusStrips() {
 
   let chargeRedColor = "red";
-  let chargeBlueColor = "red";
+  let chargeBlueColor = "blue";
 
   return (
     <div className="outer-bus-container">
-      <ChargeSymbols></ChargeSymbols>
+      <ChargeSymbols chargeRedColor={chargeRedColor} chargeBlueColor={chargeBlueColor}></ChargeSymbols>
       <div className="inner-bus-container">
-        <hr className="power-line" style={{borderColor: "blue"}} />
-        <div className="strips bus-strips">
+        <hr className="power-line" style={{borderColor: chargeBlueColor}} />
+        <div className="bus-strips">
           <BusStrip></BusStrip>
           <BusStrip></BusStrip>
         </div>
-        <hr className="power-line" style={{borderColor: "red"}} />
+        <hr className="power-line" style={{borderColor: chargeRedColor}} />
       </div>
-      <ChargeSymbols></ChargeSymbols>
+      <ChargeSymbols chargeRedColor={chargeRedColor} chargeBlueColor={chargeBlueColor}></ChargeSymbols>
     </div>
   )
 }
@@ -42,47 +48,74 @@ function BusStrip() {
 
   return (
     <div className="bus-strip">
-      {Array(50).fill(<Terminal></Terminal>)}
+      {Array(groupCount).fill(
+        <div className="bus-group">
+        { /*  TODO: change 50 to some variable containing the number of columns/groups */ }
+          {Array(terminalsPerGroup).fill(<Terminal color={terminalColor}></Terminal>)}
+        </div>
+      )}
     </div>
   )
 }
 
-function ChargeSymbols() {
+function ChargeSymbols({chargeRedColor, chargeBlueColor}) {
+
   return (
     <div className="charge-symbols">
-      <div className="charge-symbol" style={{color: "blue"}}>-</div>
-      <div className="charge-symbol" style={{color: "red"}}>+</div>
+      <div className="charge-symbol" style={{color: chargeBlueColor}}>&minus;</div>
+      <div className="charge-symbol" style={{color: chargeRedColor}}>&#43;</div>
     </div>
   )
 }
 
-function TerminalStrips() {
+function TerminalStrips({letterLabels, topStripsFlag}) {
 
-  const stripsCount = 63;
-  const terminalsPerStrip = 5;
+  let stripsCount = 63;
 
   return (
-    <div className="strips terminal-strips">
-      {Array(stripsCount).fill(<TerminalStrip terminalsPerStrip={terminalsPerStrip}></TerminalStrip>)}
+    <div className="terminal-strips">
+      <LetterLabels letterLabels={letterLabels} topStripsFlag={topStripsFlag}></LetterLabels>
+      {Array.from( {length: stripsCount} ).map((_, index) => (
+        <TerminalStrip numberLabel={index + 1} topStripsFlag={topStripsFlag}></TerminalStrip>
+      ))}
+      <LetterLabels letterLabels={letterLabels} topStripsFlag={topStripsFlag}></LetterLabels>
     </div>
   )
 }
 
-function TerminalStrip({terminalsPerStrip}) {
+function LetterLabels({letterLabels, topStripsFlag}) {
 
+  return (
+    <div className="letters">
+      {topStripsFlag && <Terminal></Terminal>}
+      {letterLabels.map((letter) => (
+        <strong className="letter">{letter}</strong>
+      ))}
+      { /* TODO: make this a div */ }
+      {!topStripsFlag && <Terminal></Terminal>}
+    </div>
+  )
+}
+
+function TerminalStrip({numberLabel, topStripsFlag}) {
+
+  let terminalsPerStrip = 5;
   let signal = false;
 
   return (
     <div className="terminal-strip">
-      {Array(terminalsPerStrip).fill(<Terminal></Terminal>)}
+      {topStripsFlag && ((numberLabel === 1 || numberLabel % 5 === 0) ? <div className="number">{numberLabel.toString()}</div> : <Terminal></Terminal>)}
+      {Array(terminalsPerStrip).fill(<Terminal color={terminalColor}></Terminal>)}
+      { /* TODO: make else condition terminal a div */ }
+      {!topStripsFlag && ((numberLabel === 1 || numberLabel % 5 === 0) ? <div className="number">{numberLabel.toString()}</div> : <Terminal></Terminal>)}
     </div>
   )
 }
 
-function Terminal() {
+function Terminal({color}) {
 
   return (
-    <div className="terminal">
+    <div className="terminal" style={{backgroundColor: color}}>
     </div>
   )
 }
