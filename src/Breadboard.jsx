@@ -1,8 +1,6 @@
 import { useState } from 'react'
 import './Breadboard.scss'
 
-const terminalColor = "black";
-
 function Breadboard() {
 
   const abcdeLabels = ["e", "d", "c", "b", "a"];
@@ -50,8 +48,7 @@ function BusStrip() {
     <div className="bus-strip">
       {Array(groupCount).fill(
         <div className="bus-group">
-        { /*  TODO: change 50 to some variable containing the number of columns/groups */ }
-          {Array(terminalsPerGroup).fill(<Terminal color={terminalColor}></Terminal>)}
+          {Array(terminalsPerGroup).fill(<Terminal></Terminal>)}
         </div>
       )}
     </div>
@@ -87,12 +84,11 @@ function LetterLabels({letterLabels, topStripsFlag}) {
 
   return (
     <div className="letters">
-      {topStripsFlag && <Terminal></Terminal>}
+      {topStripsFlag && <div className="spacer"></div>}
       {letterLabels.map((letter) => (
         <strong className="letter">{letter}</strong>
       ))}
-      { /* TODO: make this a div */ }
-      {!topStripsFlag && <Terminal></Terminal>}
+      {!topStripsFlag && <div className="spacer"></div>}
     </div>
   )
 }
@@ -104,19 +100,17 @@ function TerminalStrip({numberLabel, topStripsFlag}) {
 
   return (
     <div className="terminal-strip">
-      {topStripsFlag && ((numberLabel === 1 || numberLabel % 5 === 0) ? <div className="number">{numberLabel.toString()}</div> : <Terminal></Terminal>)}
-      {Array(terminalsPerStrip).fill(<Terminal color={terminalColor}></Terminal>)}
-      { /* TODO: make else condition terminal a div */ }
-      {!topStripsFlag && ((numberLabel === 1 || numberLabel % 5 === 0) ? <div className="number">{numberLabel.toString()}</div> : <Terminal></Terminal>)}
+      {topStripsFlag && ((numberLabel === 1 || numberLabel % 5 === 0) ? <div className="number">{numberLabel.toString()}</div> : <div className="spacer"></div>)}
+      {Array(terminalsPerStrip).fill(<Terminal></Terminal>)}
+      {!topStripsFlag && ((numberLabel === 1 || numberLabel % 5 === 0) ? <div className="number">{numberLabel.toString()}</div> : <div className="spacer"></div>)}
     </div>
   )
 }
 
-function Terminal({color}) {
+function Terminal() {
 
   return (
-    <div className="terminal" style={{backgroundColor: color}}>
-    </div>
+    <div className="terminal"></div>
   )
 }
 

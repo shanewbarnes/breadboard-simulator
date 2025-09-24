@@ -1,4 +1,5 @@
-$breadboard-color: gray;
+$breadboard-color: white;
+$terminal-label-height-width: 6px;
 
 .breadboard {
   display: flex;
@@ -76,7 +77,6 @@ hr {
   display: flex;
   flex-direction: row;
   height: 30.8%;
-  /*  NOTE: Putting left and right margins here fixes out of bounds letters */
 }
 
 .terminal-strip {
@@ -90,8 +90,9 @@ hr {
 .number {
   transform: rotate(270deg);
   font-family: helvetica;
-  font-size: 9px;
-  height: 6px;
+  font-size: .7em;
+  height: $terminal-label-height-width;
+  line-height: 50%;
 }
 
 .letters {
@@ -99,23 +100,28 @@ hr {
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  /*  TODO: Figure out whats going on here */
   height: 100%;
+  width: 100%;
 }
 
 .letter {
   transform: rotate(270deg);
-  text-align: center;
   font-family: helvetica;
   font-size: .6em;
-  height: 6px;
+  height: $terminal-label-height-width;
+  line-height: 60%;
 }
 
 .terminal {
-  background-color: $breadboard-color;
-  /*  TODO: make these percentages of div size */
-  width: 6px;
-  height: 6px;
+  background-color: black;
+  /*  TODO: maybe make these percentages of div size */
+  width: $terminal-label-height-width;
+  height: $terminal-label-height-width;
+}
+
+.spacer {
+  width: $terminal-label-height-width;
+  height: $terminal-label-height-width;
 }
 
 #divider {
