@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import './Breadboard.scss'
 
+/*  NOTE: all of the variabes in these components need to be converted to references */
+
 function Breadboard() {
 
   const abcdeLabels = ["e", "d", "c", "b", "a"];
