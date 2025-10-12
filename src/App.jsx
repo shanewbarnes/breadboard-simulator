@@ -6,6 +6,7 @@ import { Wire } from "./Tools.jsx";
 function App() {
   return (
     <>
+      <Breadboard></Breadboard>
       <Wire></Wire>
     </>
   );

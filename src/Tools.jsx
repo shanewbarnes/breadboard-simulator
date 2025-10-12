@@ -16,7 +16,7 @@ function Wire() {
   return (
     <div className="wire-container">
       <Pin parentHandlePointerMove={handlePin1PointerMove}></Pin>
-      <svg height="100%" width="100%">
+      <svg className="wire">
         <line
           x1={position.x1}
           x2={position.x2}
