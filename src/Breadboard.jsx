@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useRef, useContext, useEffect } from "react";
+import { TerminalContext } from "./Contexts.jsx";
 import "./Breadboard.scss";
 
 /*  NOTE: all of the variabes in these components need to be converted to references */
@@ -50,6 +51,7 @@ function BusStrips() {
   );
 }
 
+/*  BUG: unique key issue */
 function BusStrip() {
   const groupCount = 10;
   const terminalsPerGroup = 5;
@@ -102,6 +104,7 @@ function TerminalStrips({ letterLabels, topStripsFlag }) {
   );
 }
 
+/*  BUG: unique key issue */
 function LetterLabels({ letterLabels, topStripsFlag }) {
   return (
     <div className="letters">
@@ -138,7 +141,22 @@ function TerminalStrip({ numberLabel, topStripsFlag }) {
 }
 
 function Terminal() {
-  return <div className="terminal"></div>;
+  const terminalRef = useRef(null);
+  const terminalPositions = useContext(TerminalContext);
+  let terminalPosition;
+  let terminalRadius = terminalRef.current.offsetWidth / 2;
+
+  useEffect(() => {
+    terminalPosition = {
+      left: terminalRef.current.getBoundingClientRect().left + terminalRadius,
+      top: terminalRef.current.getBoundingClientRect().top + terminalRadius,
+    };
+    terminalPositions.add(terminalPosition);
+
+    return () => terminalPositions.delete(terminalPosition);
+  }, []);
+
+  return <div className="terminal" ref={terminalRef}></div>;
 }
 
 export default Breadboard;
