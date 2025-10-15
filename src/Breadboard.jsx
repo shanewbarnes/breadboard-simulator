@@ -144,13 +144,16 @@ function Terminal() {
   const terminalRef = useRef(null);
   const terminalPositions = useContext(TerminalContext);
   let terminalPosition;
-  let terminalRadius = terminalRef.current.offsetWidth / 2;
+  let terminalRadius;
 
   useEffect(() => {
+    terminalRadius = terminalRef.current.offsetWidth / 2;
+
     terminalPosition = {
       left: terminalRef.current.getBoundingClientRect().left + terminalRadius,
       top: terminalRef.current.getBoundingClientRect().top + terminalRadius,
     };
+
     terminalPositions.add(terminalPosition);
 
     return () => terminalPositions.delete(terminalPosition);
