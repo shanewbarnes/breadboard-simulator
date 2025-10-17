@@ -1,5 +1,5 @@
 import { useState, useRef, useContext, useEffect } from "react";
-import { TerminalContext } from "./Contexts.jsx";
+import { TerminalContext } from "../Contexts.jsx";
 import "./Breadboard.scss";
 
 /*  NOTE: all of the variabes in these components need to be converted to references */

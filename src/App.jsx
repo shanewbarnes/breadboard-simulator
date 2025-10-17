@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./App.css";
-import Breadboard from "./Breadboard.jsx";
-import { Wire } from "./Tools.jsx";
+import Breadboard from "./components/Breadboard.jsx";
+import Wire from "./components/Wire.jsx";
 
 function App() {
   return (
