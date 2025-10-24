@@ -1,4 +1,5 @@
 import { useState, useRef, useContext } from "react";
+import { addDragDropEvents, removeDragDropEvents } from "../Utils.jsx";
 import { TerminalContext } from "../Contexts.jsx";
 import "./Pin.css";
 
@@ -9,24 +10,22 @@ function Pin({ parentHandlePointerEvent }) {
   const terminalPositions = useContext(TerminalContext);
   let pinRadius;
 
+  function handlePointerDown(e) {
+    pin.current = e.target;
+    pinRadius = pin.current.offsetWidth / 2;
+
+    handleDrag(e, documentRef, { handlePointerMove, handlePointerUp });
+  }
+
   function handlePointerMove(e) {
     setPosition({
       left: e.clientX - pinRadius,
       top: e.clientY - pinRadius,
     });
 
-    parentHandlePointerEvent(e.clientX, e.clientY);
-  }
-
-  function handlePointerDown(e) {
-    //  NOTE: preventDefault ensures that pointerup event fires
-    e.preventDefault();
-
-    pin.current = e.target;
-    pinRadius = pin.current.offsetWidth / 2;
-
-    documentRef.current.addEventListener("pointermove", handlePointerMove);
-    documentRef.current.addEventListener("pointerup", handlePointerUp);
+    if (parentHandlePointerEvent) {
+      parentHandlePointerEvent(e.clientX, e.clientY);
+    }
   }
 
   function handlePointerUp(e) {
@@ -54,10 +53,11 @@ function Pin({ parentHandlePointerEvent }) {
       top: minPosition.top - pinRadius,
     });
 
-    parentHandlePointerEvent(minPosition.left, minPosition.top);
+    if (parentHandlePointerEvent) {
+      parentHandlePointerEvent(minPosition.left, minPosition.top);
+    }
 
-    documentRef.current.removeEventListener("pointermove", handlePointerMove);
-    documentRef.current.removeEventListener("pointerup", handlePointerUp);
+    handleDrop(documentRef, { handlePointerMove, handlePointerUp });
   }
 
   return (
