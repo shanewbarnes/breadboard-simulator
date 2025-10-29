@@ -1,20 +1,17 @@
-import { useState, useRef, useContext } from "react";
-import { addDragDropEvents, removeDragDropEvents } from "../Utils.jsx";
+import { useState, useRef, useEffect, useContext } from "react";
+import { handleDrag, handleDrop, locateNearestTerminal } from "../Utils.jsx";
 import { TerminalContext } from "../Contexts.jsx";
 import "./Pin.css";
 
-function Pin({ parentHandlePointerEvent }) {
-  const pin = useRef(null);
+function Pin({ parentHandlePointerEvent, mounted }) {
+  const pinRef = useRef(null);
   const [position, setPosition] = useState({ left: 0, top: 0 });
   const documentRef = useRef(document);
   const terminalPositions = useContext(TerminalContext);
   let pinRadius;
 
   function handlePointerDown(e) {
-    pin.current = e.target;
-    pinRadius = pin.current.offsetWidth / 2;
-
-    handleDrag(e, documentRef, { handlePointerMove, handlePointerUp });
+    handleDrag(e, documentRef, [ handlePointerMove, handlePointerUp ]);
   }
 
   function handlePointerMove(e) {
@@ -29,42 +26,30 @@ function Pin({ parentHandlePointerEvent }) {
   }
 
   function handlePointerUp(e) {
-    let distance;
-    let minDistance = Infinity;
-    let minPosition;
-
-    //  BUG: sometimes this does not find the closest terminal
-    terminalPositions.forEach((terminalPosition) => {
-      distance =
-        (e.clientX - terminalPosition.left) ** 2 +
-        ((e.clientY - terminalPosition.top) ** 2) ** 0.5;
-
-      if (distance < minDistance) {
-        minDistance = distance;
-        minPosition = {
-          left: terminalPosition.left,
-          top: terminalPosition.top,
-        };
-      }
-    });
+    const nearestPosition = locateNearestTerminal(e.clientX, e.clientY, terminalPositions);
 
     setPosition({
-      left: minPosition.left - pinRadius,
-      top: minPosition.top - pinRadius,
+      left: nearestPosition.left - pinRadius,
+      top: nearestPosition.top - pinRadius,
     });
 
     if (parentHandlePointerEvent) {
-      parentHandlePointerEvent(minPosition.left, minPosition.top);
+      parentHandlePointerEvent(nearestPosition.left, nearestPosition.top);
     }
 
-    handleDrop(documentRef, { handlePointerMove, handlePointerUp });
+    handleDrop(documentRef, [ handlePointerMove, handlePointerUp ]);
   }
+
+  useEffect(() => {
+    pinRadius = pinRef.current.offsetWidth / 2;
+  });
 
   return (
     <div
       className="pin"
       style={{ left: position.left, top: position.top }}
-      onPointerDown={handlePointerDown}
+      ref={pinRef}
+      onPointerDown={mounted ? handlePointerDown : null}
     ></div>
   );
 }

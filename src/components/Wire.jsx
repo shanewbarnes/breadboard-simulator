@@ -3,7 +3,7 @@ import { TerminalContext } from "../Contexts.jsx";
 import Pin from "./Pin.jsx"
 import "./Wire.css";
 
-function Wire() {
+function Wire({ mounted }) {
   const [position, setPosition] = useState({ x1: 0, x2: 0, y1: 0, y2: 0 });
   const color = "red";
 
@@ -17,7 +17,7 @@ function Wire() {
 
   return (
     <div className="wire-container">
-      <Pin parentHandlePointerEvent={handlePin1PointerEvent}></Pin>
+      <Pin parentHandlePointerEvent={handlePin1PointerEvent} mounted={mounted}></Pin>
       <svg className="wire">
         <line
           x1={position.x1}
@@ -28,7 +28,7 @@ function Wire() {
           strokeWidth="6"
         />
       </svg>
-      <Pin parentHandlePointerEvent={handlePin2PointerEvent}></Pin>
+      <Pin parentHandlePointerEvent={handlePin2PointerEvent} mounted={mounted}></Pin>
     </div>
   );
 }

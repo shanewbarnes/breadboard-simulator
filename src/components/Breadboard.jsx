@@ -142,6 +142,7 @@ function TerminalStrip({ numberLabel, topStripsFlag }) {
 
 function Terminal() {
   const terminalRef = useRef(null);
+  //  TODO: need to get the terminalPositions to update when the breadboard moves
   const terminalPositions = useContext(TerminalContext);
   let terminalPosition;
   let terminalRadius;
