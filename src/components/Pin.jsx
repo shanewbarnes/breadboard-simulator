@@ -3,21 +3,25 @@ import { handleDrag, handleDrop, locateNearestTerminal } from "../Utils.jsx";
 import { TerminalContext } from "../Contexts.jsx";
 import "./Pin.css";
 
-function Pin({ parentHandlePointerEvent, mounted }) {
+/*  NOTE: Maybe split pin into mounted and unmounted types */
+function Pin({ parentHandlePointerEvent, mounted, unmountedPosition }) {
   const pinRef = useRef(null);
-  const [position, setPosition] = useState({ left: 0, top: 0 });
+  const [position, setPosition] = useState({
+    left: unmountedPosition.left,
+    top: unmountedPosition.top,
+  });
   const documentRef = useRef(document);
   const terminalPositions = useContext(TerminalContext);
-  let pinRadius;
+  const pinRadius = useRef(0);
 
   function handlePointerDown(e) {
-    handleDrag(e, documentRef, [ handlePointerMove, handlePointerUp ]);
+    handleDrag(e, documentRef, [handlePointerMove, handlePointerUp]);
   }
 
   function handlePointerMove(e) {
     setPosition({
-      left: e.clientX - pinRadius,
-      top: e.clientY - pinRadius,
+      left: e.clientX - pinRadius.current,
+      top: e.clientY - pinRadius.current,
     });
 
     if (parentHandlePointerEvent) {
@@ -26,28 +30,54 @@ function Pin({ parentHandlePointerEvent, mounted }) {
   }
 
   function handlePointerUp(e) {
-    const nearestPosition = locateNearestTerminal(e.clientX, e.clientY, terminalPositions);
+    const nearestPosition = locateNearestTerminal(
+      e.clientX,
+      e.clientY,
+      terminalPositions,
+    );
 
     setPosition({
-      left: nearestPosition.left - pinRadius,
-      top: nearestPosition.top - pinRadius,
+      left: nearestPosition.left - pinRadius.current,
+      top: nearestPosition.top - pinRadius.current,
     });
 
     if (parentHandlePointerEvent) {
       parentHandlePointerEvent(nearestPosition.left, nearestPosition.top);
     }
 
-    handleDrop(documentRef, [ handlePointerMove, handlePointerUp ]);
+    handleDrop(documentRef, [handlePointerMove, handlePointerUp]);
   }
 
   useEffect(() => {
-    pinRadius = pinRef.current.offsetWidth / 2;
-  });
+    if (mounted === true) {
+      const nearestPosition = locateNearestTerminal(
+        unmountedPosition.left,
+        unmountedPosition.top,
+        terminalPositions,
+      );
+
+      setPosition({
+        left: nearestPosition.left - pinRadius.current,
+        top: nearestPosition.top - pinRadius.current,
+      });
+
+      if (parentHandlePointerEvent) {
+        parentHandlePointerEvent(nearestPosition.left, nearestPosition.top);
+      }
+    }
+  }, [mounted]);
+
+  useEffect(() => {
+    pinRadius.current = pinRef.current.offsetWidth / 2;
+  }, []);
 
   return (
     <div
       className="pin"
-      style={{ left: position.left, top: position.top }}
+      style={{
+        left: mounted ? position.left : unmountedPosition.left,
+        top: mounted ? position.top : unmountedPosition.top,
+      }}
       ref={pinRef}
       onPointerDown={mounted ? handlePointerDown : null}
     ></div>

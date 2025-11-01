@@ -1,6 +1,13 @@
 $breadboard-color: gray;
 $terminal-label-height-width: 6px;
 
+.breadboard-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
 .breadboard {
   display: flex;
   flex-direction: column;

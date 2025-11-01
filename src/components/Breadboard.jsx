@@ -9,18 +9,20 @@ function Breadboard() {
   const fghijLabels = ["j", "i", "h", "g", "f"];
 
   return (
-    <div className="breadboard">
-      <BusStrips></BusStrips>
-      <TerminalStrips
-        letterLabels={fghijLabels}
-        topStripsFlag={true}
-      ></TerminalStrips>
-      <div id="divider"></div>
-      <TerminalStrips
-        letterLabels={abcdeLabels}
-        topStripsFlag={false}
-      ></TerminalStrips>
-      <BusStrips></BusStrips>
+    <div className="breadboard-container">
+      <div className="breadboard">
+        <BusStrips></BusStrips>
+        <TerminalStrips
+          letterLabels={fghijLabels}
+          topStripsFlag={true}
+        ></TerminalStrips>
+        <div id="divider"></div>
+        <TerminalStrips
+          letterLabels={abcdeLabels}
+          topStripsFlag={false}
+        ></TerminalStrips>
+        <BusStrips></BusStrips>
+      </div>
     </div>
   );
 }
@@ -142,7 +144,7 @@ function TerminalStrip({ numberLabel, topStripsFlag }) {
 
 function Terminal() {
   const terminalRef = useRef(null);
-  //  TODO: need to get the terminalPositions to update when the breadboard moves
+  /*  TODO: need to get the terminalPositions to update when the breadboard moves */
   const terminalPositions = useContext(TerminalContext);
   let terminalPosition;
   let terminalRadius;
@@ -150,6 +152,7 @@ function Terminal() {
   useEffect(() => {
     terminalRadius = terminalRef.current.offsetWidth / 2;
 
+    /*  NOTE: might need to make getBoudingClientRect offsetWidth/offsetHeight to fix alignment issue */
     terminalPosition = {
       left: terminalRef.current.getBoundingClientRect().left + terminalRadius,
       top: terminalRef.current.getBoundingClientRect().top + terminalRadius,
