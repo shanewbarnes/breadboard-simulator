@@ -1,8 +1,9 @@
 import { useState, useRef } from "react";
 import { handleDrag, handleDrop } from "../Utils.jsx";
+import "./ComponentContainer.css";
 
 function ComponentContainer({ Component }) {
-  const [position, setPosition] = useState({ left: 0, top: 0 });
+  const [position, setPosition] = useState({ left: 40, top: 40 });
   const [mounted, setMounted] = useState(false);
   const documentRef = useRef(document);
 
@@ -15,9 +16,8 @@ function ComponentContainer({ Component }) {
   }
 
   function handlePointerUp(e) {
-    handleDrop(documentRef, [handlePointerMove, handlePointerUp]);
-    setPosition({ left: e.clientX, top: e.clientY });
     setMounted(true);
+    handleDrop(documentRef, [handlePointerMove, handlePointerUp]);
   }
 
   return (

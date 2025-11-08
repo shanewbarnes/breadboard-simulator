@@ -5,8 +5,8 @@ import ComponentContainer from "./components/ComponentContainer.jsx";
 import Wire from "./components/Wire.jsx";
 import Lightbulb from "./components/Lightbulb.jsx";
 
+/*  NOTE: Breadboard needs to be rendered second here */
 function App() {
-  /*  NOTE: Breadboard needs to be rendered second here */
   return (
     <>
       <ComponentContainer Component={Wire}></ComponentContainer>

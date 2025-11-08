@@ -152,7 +152,6 @@ function Terminal() {
   useEffect(() => {
     terminalRadius = terminalRef.current.offsetWidth / 2;
 
-    /*  NOTE: might need to make getBoudingClientRect offsetWidth/offsetHeight to fix alignment issue */
     terminalPosition = {
       left: terminalRef.current.getBoundingClientRect().left + terminalRadius,
       top: terminalRef.current.getBoundingClientRect().top + terminalRadius,

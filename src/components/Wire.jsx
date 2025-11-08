@@ -4,7 +4,12 @@ import Pin from "./Pin.jsx";
 import "./Wire.css";
 
 function Wire({ mounted, unmountedPosition }) {
-  const [position, setPosition] = useState({ x1: 0, x2: 0, y1: 0, y2: 0 });
+  const [position, setPosition] = useState({
+    x1: unmountedPosition.left,
+    x2: unmountedPosition.left,
+    y1: unmountedPosition.top,
+    y2: unmountedPosition.top + 50,
+  });
   const color = "red";
   const strokeWidth = "8";
 
@@ -21,7 +26,7 @@ function Wire({ mounted, unmountedPosition }) {
       <Pin
         parentHandlePointerEvent={handlePin1PointerEvent}
         mounted={mounted}
-        unmountedPosition={unmountedPosition}
+        unmountedPosition={{ left: unmountedPosition.left, top: unmountedPosition.top }}
       ></Pin>
       <svg className="wire-svg">
         <line
@@ -36,7 +41,7 @@ function Wire({ mounted, unmountedPosition }) {
       <Pin
         parentHandlePointerEvent={handlePin2PointerEvent}
         mounted={mounted}
-        unmountedPosition={unmountedPosition}
+        unmountedPosition={{ left: unmountedPosition.left, top: unmountedPosition.top + 50 }}
       ></Pin>
     </div>
   );

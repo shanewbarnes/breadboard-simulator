@@ -3,7 +3,7 @@ import { handleDrag, handleDrop, locateNearestTerminal } from "../Utils.jsx";
 import { TerminalContext } from "../Contexts.jsx";
 import "./Pin.css";
 
-/*  NOTE: Maybe split pin into mounted and unmounted types */
+/*  NOTE: maybe split pin into mounted and unmounted types */
 function Pin({ parentHandlePointerEvent, mounted, unmountedPosition }) {
   const pinRef = useRef(null);
   const [position, setPosition] = useState({
@@ -12,7 +12,8 @@ function Pin({ parentHandlePointerEvent, mounted, unmountedPosition }) {
   });
   const documentRef = useRef(document);
   const terminalPositions = useContext(TerminalContext);
-  const pinRadius = useRef(0);
+  /*  TODO: modify this a size changes */
+  const pinRadius = useRef(10);
 
   function handlePointerDown(e) {
     handleDrag(e, documentRef, [handlePointerMove, handlePointerUp]);
