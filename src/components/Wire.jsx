@@ -1,25 +1,38 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { TerminalContext } from "../Contexts.jsx";
 import Pin from "./Pin.jsx";
 import "./Wire.css";
 
 function Wire({ mounted, unmountedPosition }) {
+  const initialLength = 50;
+  const pinRadius = 10;
   const [position, setPosition] = useState({
-    x1: unmountedPosition.left,
-    x2: unmountedPosition.left,
-    y1: unmountedPosition.top,
-    y2: unmountedPosition.top + 50,
+    x1: unmountedPosition.left + pinRadius,
+    x2: unmountedPosition.left + pinRadius,
+    y1: unmountedPosition.top + pinRadius,
+    y2: unmountedPosition.top + initialLength + pinRadius,
   });
   const color = "red";
   const strokeWidth = "8";
 
   function handlePin1PointerEvent(x, y) {
-    setPosition({ ...position, x1: x, y1: y });
+    /*  NOTE: Functional state update required to prevent multiple updates from being batched */
+    setPosition(position => ({ ...position, x1: x, y1: y }));
   }
 
   function handlePin2PointerEvent(x, y) {
-    setPosition({ ...position, x2: x, y2: y });
+    /*  NOTE: Functional state update required to prevent multiple updates from being batched */
+    setPosition(position => ({ ...position, x2: x, y2: y }));
   }
+
+  useEffect(() => {
+    setPosition({
+      x1: unmountedPosition.left + pinRadius,
+      x2: unmountedPosition.left + pinRadius,
+      y1: unmountedPosition.top + pinRadius,
+      y2: unmountedPosition.top + initialLength + pinRadius,
+    });
+  }, [unmountedPosition])
 
   return (
     <div className="wire-container">
@@ -41,7 +54,7 @@ function Wire({ mounted, unmountedPosition }) {
       <Pin
         parentHandlePointerEvent={handlePin2PointerEvent}
         mounted={mounted}
-        unmountedPosition={{ left: unmountedPosition.left, top: unmountedPosition.top + 50 }}
+        unmountedPosition={{ left: unmountedPosition.left, top: unmountedPosition.top + initialLength }}
       ></Pin>
     </div>
   );
