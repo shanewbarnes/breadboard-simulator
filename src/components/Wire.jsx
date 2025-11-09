@@ -26,12 +26,14 @@ function Wire({ mounted, unmountedPosition }) {
   }
 
   useEffect(() => {
-    setPosition({
-      x1: unmountedPosition.left + pinRadius,
-      x2: unmountedPosition.left + pinRadius,
-      y1: unmountedPosition.top + pinRadius,
-      y2: unmountedPosition.top + initialLength + pinRadius,
-    });
+    if (!mounted) {
+      setPosition({
+        x1: unmountedPosition.left + pinRadius,
+        x2: unmountedPosition.left + pinRadius,
+        y1: unmountedPosition.top + pinRadius,
+        y2: unmountedPosition.top + initialLength + pinRadius,
+      });
+    }
   }, [unmountedPosition])
 
   return (
