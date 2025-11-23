@@ -9,7 +9,7 @@ import Lightbulb from "./components/Lightbulb.jsx";
 function App() {
   return (
     <>
-      <ComponentContainer Component={Wire}></ComponentContainer>
+      <ComponentContainer Component={Lightbulb}></ComponentContainer>
       <Breadboard></Breadboard>
     </>
   );

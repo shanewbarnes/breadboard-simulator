@@ -1,5 +1,8 @@
-
-export function handleDrag(e, documentRef, [ handlePointerMove, handlePointerUp ]) {
+export function handleDrag(
+  e,
+  documentRef,
+  [handlePointerMove, handlePointerUp],
+) {
   //  NOTE: preventDefault ensures that pointerup event fires
   e.preventDefault();
 
@@ -7,7 +10,7 @@ export function handleDrag(e, documentRef, [ handlePointerMove, handlePointerUp 
   documentRef.current.addEventListener("pointerup", handlePointerUp);
 }
 
-export function handleDrop(documentRef, [ handlePointerMove, handlePointerUp ]) {
+export function handleDrop(documentRef, [handlePointerMove, handlePointerUp]) {
   documentRef.current.removeEventListener("pointermove", handlePointerMove);
   documentRef.current.removeEventListener("pointerup", handlePointerUp);
 }
@@ -20,8 +23,8 @@ export function locateNearestTerminal(clientX, clientY, terminalPositions) {
   //  BUG: sometimes this does not find the closest terminal
   terminalPositions.forEach((terminalPosition) => {
     distance =
-      (clientX - terminalPosition.left) ** 2 +
-      ((clientY - terminalPosition.top) ** 2) ** 0.5;
+      ((clientX - terminalPosition.left) ** 2 +
+      (clientY - terminalPosition.top) ** 2) ** 0.5;
 
     if (distance < minDistance) {
       minDistance = distance;

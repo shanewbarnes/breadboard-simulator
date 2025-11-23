@@ -62,9 +62,9 @@ function Pin({ parentHandlePointerEvent, mounted, unmountedPosition }) {
         top: nearestPosition.top - pinRadius.current,
       });
 
-    if (parentHandlePointerEvent) {
-      parentHandlePointerEvent(nearestPosition.left, nearestPosition.top);
-    }
+      if (parentHandlePointerEvent) {
+        parentHandlePointerEvent(nearestPosition.left, nearestPosition.top);
+      }
     }
   }, [mounted]);
 

@@ -16,13 +16,11 @@ function Wire({ mounted, unmountedPosition }) {
   const strokeWidth = "8";
 
   function handlePin1PointerEvent(x, y) {
-    /*  NOTE: Functional state update required to prevent multiple updates from being batched */
-    setPosition(position => ({ ...position, x1: x, y1: y }));
+    setPosition((position) => ({ ...position, x1: x, y1: y }));
   }
 
   function handlePin2PointerEvent(x, y) {
-    /*  NOTE: Functional state update required to prevent multiple updates from being batched */
-    setPosition(position => ({ ...position, x2: x, y2: y }));
+    setPosition((position) => ({ ...position, x2: x, y2: y }));
   }
 
   useEffect(() => {
@@ -34,16 +32,16 @@ function Wire({ mounted, unmountedPosition }) {
         y2: unmountedPosition.top + initialLength + pinRadius,
       });
     }
-  }, [unmountedPosition])
+  }, [unmountedPosition]);
 
   return (
     <div className="wire-container">
       <Pin
         parentHandlePointerEvent={handlePin1PointerEvent}
         mounted={mounted}
-        unmountedPosition={{ left: unmountedPosition.left, top: unmountedPosition.top }}
+        unmountedPosition={unmountedPosition}
       ></Pin>
-      <svg className="wire-svg">
+      <svg className="line-svg">
         <line
           x1={position.x1}
           x2={position.x2}
@@ -56,7 +54,10 @@ function Wire({ mounted, unmountedPosition }) {
       <Pin
         parentHandlePointerEvent={handlePin2PointerEvent}
         mounted={mounted}
-        unmountedPosition={{ left: unmountedPosition.left, top: unmountedPosition.top + initialLength }}
+        unmountedPosition={{
+          left: unmountedPosition.left,
+          top: unmountedPosition.top + initialLength,
+        }}
       ></Pin>
     </div>
   );
