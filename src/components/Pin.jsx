@@ -6,14 +6,14 @@ import "./Pin.css";
 /*  NOTE: maybe split pin into mounted and unmounted types */
 function Pin({ parentHandlePointerEvent, mounted, unmountedPosition }) {
   const pinRef = useRef(null);
+  /*  TODO: modify this as size changes */
+  const pinRadius = useRef(10);
   const [position, setPosition] = useState({
     left: unmountedPosition.left,
     top: unmountedPosition.top,
   });
   const documentRef = useRef(document);
   const terminalPositions = useContext(TerminalContext);
-  /*  TODO: modify this a size changes */
-  const pinRadius = useRef(10);
 
   function handlePointerDown(e) {
     handleDrag(e, documentRef, [handlePointerMove, handlePointerUp]);
@@ -76,8 +76,8 @@ function Pin({ parentHandlePointerEvent, mounted, unmountedPosition }) {
     <div
       className="pin"
       style={{
-        left: mounted ? position.left : unmountedPosition.left,
-        top: mounted ? position.top : unmountedPosition.top,
+        left: mounted ? position.left : unmountedPosition.left - pinRadius.current,
+        top: mounted ? position.top : unmountedPosition.top - pinRadius.current,
       }}
       ref={pinRef}
       onPointerDown={mounted ? handlePointerDown : null}

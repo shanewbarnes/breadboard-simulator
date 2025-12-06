@@ -1,19 +1,17 @@
 import { useState, useEffect } from "react";
 import { TerminalContext } from "../Contexts.jsx";
 import Pin from "./Pin.jsx";
+import Line from "./Line.jsx"
 import "./Wire.css";
 
 function Wire({ mounted, unmountedPosition }) {
   const initialLength = 50;
-  const pinRadius = 10;
   const [position, setPosition] = useState({
-    x1: unmountedPosition.left + pinRadius,
-    x2: unmountedPosition.left + pinRadius,
-    y1: unmountedPosition.top + pinRadius,
-    y2: unmountedPosition.top + initialLength + pinRadius,
+    x1: unmountedPosition.left,
+    x2: unmountedPosition.left,
+    y1: unmountedPosition.top,
+    y2: unmountedPosition.top + initialLength,
   });
-  const color = "red";
-  const strokeWidth = "8";
 
   function handlePin1PointerEvent(x, y) {
     setPosition((position) => ({ ...position, x1: x, y1: y }));
@@ -26,10 +24,10 @@ function Wire({ mounted, unmountedPosition }) {
   useEffect(() => {
     if (!mounted) {
       setPosition({
-        x1: unmountedPosition.left + pinRadius,
-        x2: unmountedPosition.left + pinRadius,
-        y1: unmountedPosition.top + pinRadius,
-        y2: unmountedPosition.top + initialLength + pinRadius,
+        x1: unmountedPosition.left,
+        x2: unmountedPosition.left,
+        y1: unmountedPosition.top,
+        y2: unmountedPosition.top + initialLength,
       });
     }
   }, [unmountedPosition]);
@@ -41,16 +39,7 @@ function Wire({ mounted, unmountedPosition }) {
         mounted={mounted}
         unmountedPosition={unmountedPosition}
       ></Pin>
-      <svg className="line-svg">
-        <line
-          x1={position.x1}
-          x2={position.x2}
-          y1={position.y1}
-          y2={position.y2}
-          stroke={color}
-          strokeWidth={strokeWidth}
-        />
-      </svg>
+      <Line position={position}></Line>
       <Pin
         parentHandlePointerEvent={handlePin2PointerEvent}
         mounted={mounted}
