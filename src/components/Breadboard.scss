@@ -7,7 +7,6 @@ $breadboard-height: calc($breadboard-width / 3);
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
 }
 
 .breadboard {
@@ -137,4 +136,8 @@ hr {
 #divider {
   height: 3.6%;
   background-color: black;
+}
+
+.text {
+  user-select: none;
 }

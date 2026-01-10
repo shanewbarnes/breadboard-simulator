@@ -73,10 +73,10 @@ function BusStrip() {
 function ChargeSymbols({ chargeRedColor, chargeBlueColor }) {
   return (
     <div className="charge-symbols">
-      <div className="charge-symbol" style={{ color: chargeBlueColor }}>
+      <div className="charge-symbol text" style={{ color: chargeBlueColor }}>
         &minus;
       </div>
-      <div className="charge-symbol" style={{ color: chargeRedColor }}>
+      <div className="charge-symbol text" style={{ color: chargeRedColor }}>
         &#43;
       </div>
     </div>
@@ -109,7 +109,7 @@ function TerminalStrips({ letterLabels, topStripsFlag }) {
 /*  BUG: unique key issue */
 function LetterLabels({ letterLabels, topStripsFlag }) {
   return (
-    <div className="letters">
+    <div className="letters text">
       {topStripsFlag && <div className="spacer"></div>}
       {letterLabels.map((letter) => (
         <strong className="letter">{letter}</strong>
@@ -127,14 +127,14 @@ function TerminalStrip({ numberLabel, topStripsFlag }) {
     <div className="terminal-strip">
       {topStripsFlag &&
         (numberLabel === 1 || numberLabel % 5 === 0 ? (
-          <div className="number">{numberLabel.toString()}</div>
+          <div className="number text">{numberLabel.toString()}</div>
         ) : (
           <div className="spacer"></div>
         ))}
       {Array(terminalsPerStrip).fill(<Terminal></Terminal>)}
       {!topStripsFlag &&
         (numberLabel === 1 || numberLabel % 5 === 0 ? (
-          <div className="number">{numberLabel.toString()}</div>
+          <div className="number text">{numberLabel.toString()}</div>
         ) : (
           <div className="spacer"></div>
         ))}
