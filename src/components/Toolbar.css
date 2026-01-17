@@ -1,0 +1,17 @@
+.toolbar-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.toolbar {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  background-color: gray;
+  height: 60%;
+  width: 100px;
+  left: 1%;
+}

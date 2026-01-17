@@ -1,16 +1,20 @@
-import { useState } from "react";
 import "./App.css";
 import Breadboard from "./components/Breadboard.jsx";
+import Toolbar from "./components/Toolbar.jsx";
 import ComponentContainer from "./components/ComponentContainer.jsx";
 import Wire from "./components/Wire.jsx";
 import Lightbulb from "./components/Lightbulb.jsx";
 
-/*  NOTE: Breadboard needs to be rendered second here */
 function App() {
   return (
     <>
-      <ComponentContainer Component={Lightbulb}></ComponentContainer>
-      <Breadboard></Breadboard>
+      <div className="app-container">
+        <Toolbar>
+          <ComponentContainer Component={Wire}></ComponentContainer>
+          <ComponentContainer Component={Lightbulb}></ComponentContainer>
+        </Toolbar>
+        <Breadboard></Breadboard>
+      </div>
     </>
   );
 }

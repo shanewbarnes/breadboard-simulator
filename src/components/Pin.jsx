@@ -3,8 +3,7 @@ import { handleDrag, handleDrop, locateNearestTerminal } from "../Utils.jsx";
 import { TerminalContext } from "../Contexts.jsx";
 import "./Pin.css";
 
-/*  NOTE: maybe split pin into mounted and unmounted types */
-function Pin({ parentHandlePointerEvent, mounted, unmountedPosition }) {
+function Pin({ parentHandlePointerEvent, mounted, unmountedPosition, inToolbar }) {
   const pinRef = useRef(null);
   /*  TODO: modify this as size changes */
   const pinRadius = useRef(10);
@@ -67,10 +66,16 @@ function Pin({ parentHandlePointerEvent, mounted, unmountedPosition }) {
       }
     }
   }, [mounted]);
-
+ 
   useEffect(() => {
     pinRadius.current = pinRef.current.offsetWidth / 2;
   }, []);
+
+  useEffect(() => {
+    if (!inToolbar) {
+      pinRef.current.style.position = "fixed";
+    }
+  }, [inToolbar]);
 
   return (
     <div

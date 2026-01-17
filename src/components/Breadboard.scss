@@ -7,12 +7,12 @@ $breadboard-height: calc($breadboard-width / 3);
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100vw;
 }
 
 .breadboard {
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
   background-color: $breadboard-color;
   width: $breadboard-width;
   height: $breadboard-height;

@@ -1,10 +1,9 @@
-import { useState, useEffect } from "react";
-import { TerminalContext } from "../Contexts.jsx";
+import { useState, useEffect, useRef } from "react";
 import Pin from "./Pin.jsx";
-import Line from "./Line.jsx"
+import Line from "./Line.jsx";
 import "./Wire.css";
 
-function Wire({ mounted, unmountedPosition }) {
+function Wire({ mounted, unmountedPosition, inToolbar }) {
   const initialLength = 50;
   const [position, setPosition] = useState({
     x1: unmountedPosition.left,
@@ -38,6 +37,7 @@ function Wire({ mounted, unmountedPosition }) {
         parentHandlePointerEvent={handlePin1PointerEvent}
         mounted={mounted}
         unmountedPosition={unmountedPosition}
+        inToolbar={inToolbar}
       ></Pin>
       <Line position={position}></Line>
       <Pin
@@ -47,6 +47,7 @@ function Wire({ mounted, unmountedPosition }) {
           left: unmountedPosition.left,
           top: unmountedPosition.top + initialLength,
         }}
+        inToolbar={inToolbar}
       ></Pin>
     </div>
   );

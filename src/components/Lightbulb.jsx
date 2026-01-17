@@ -4,7 +4,7 @@ import "./Wire.css";
 import Pin from "./Pin.jsx";
 import Line from "./Line.jsx";
 
-function Lightbulb({ mounted, unmountedPosition }) {
+function Lightbulb({ mounted, unmountedPosition, inToolbar }) {
   const [bulbPosition, setBulbPosition] = useState({
     left: unmountedPosition.left,
     top: unmountedPosition.top,
@@ -41,14 +41,15 @@ function Lightbulb({ mounted, unmountedPosition }) {
         parentHandlePointerEvent={handlePin1PointerEvent}
         mounted={mounted}
         unmountedPosition={{
-          left: unmountedPosition.left + bulbRadius,
+          left: unmountedPosition.left,
           top: unmountedPosition.top
         }}
+        inToolbar={inToolbar}
       ></Pin>
       <div
         className="lightbulb"
         style={{
-          left: mounted ? bulbPosition.left : unmountedPosition.left,
+          left: mounted ? bulbPosition.left : unmountedPosition.left - bulbRadius,
           top: mounted ? bulbPosition.top : unmountedPosition.top,
         }}
       ></div>
@@ -57,9 +58,10 @@ function Lightbulb({ mounted, unmountedPosition }) {
         parentHandlePointerEvent={handlePin2PointerEvent}
         mounted={mounted}
         unmountedPosition={{
-          left: unmountedPosition.left + bulbRadius,
+          left: unmountedPosition.left,
           top: unmountedPosition.top + bulbRadius * 2,
         }}
+        inToolbar={inToolbar}
       ></Pin>
     </div>
   );

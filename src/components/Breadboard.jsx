@@ -1,4 +1,4 @@
-import { useState, useRef, useContext, useEffect } from "react";
+import { useRef, useContext, useEffect } from "react";
 import { TerminalContext } from "../Contexts.jsx";
 import "./Breadboard.scss";
 

@@ -3,11 +3,14 @@ import { handleDrag, handleDrop } from "../Utils.jsx";
 import "./ComponentContainer.css";
 
 function ComponentContainer({ Component }) {
-  const [position, setPosition] = useState({ left: 40, top: 40 });
   const [mounted, setMounted] = useState(false);
+  const [position, setPosition] = useState({ left: 0, top: 0 });
+  const [inToolbar, setInToolbar] = useState(true);
   const documentRef = useRef(document);
+  const containerRef = useRef(null);
 
   function handlePointerDown(e) {
+    setInToolbar(false);
     handleDrag(e, documentRef, [handlePointerMove, handlePointerUp]);
   }
 
@@ -24,9 +27,10 @@ function ComponentContainer({ Component }) {
     <div
       className="component-container"
       style={{ left: position.left, top: position.top }}
+      ref={containerRef}
       onPointerDown={!mounted ? handlePointerDown : null}
     >
-      <Component mounted={mounted} unmountedPosition={position}></Component>
+      <Component mounted={mounted} unmountedPosition={position} inToolbar={inToolbar}></Component>
     </div>
   );
 }
