@@ -3,7 +3,7 @@ import { handleDrag, handleDrop } from "../Utils.jsx";
 import "./ComponentContainer.css";
 
 function ComponentContainer({ Component }) {
-  const [position, setPosition] = useState({ left: 40, top: 40 });
+  const [position, setPosition] = useState({ left: 0, top: 0 });
   const [mounted, setMounted] = useState(false);
   const documentRef = useRef(document);
 

@@ -41,14 +41,14 @@ function Lightbulb({ mounted, unmountedPosition }) {
         parentHandlePointerEvent={handlePin1PointerEvent}
         mounted={mounted}
         unmountedPosition={{
-          left: unmountedPosition.left + bulbRadius,
+          left: unmountedPosition.left,
           top: unmountedPosition.top
         }}
       ></Pin>
       <div
         className="lightbulb"
         style={{
-          left: mounted ? bulbPosition.left : unmountedPosition.left,
+          left: mounted ? bulbPosition.left : unmountedPosition.left - bulbRadius,
           top: mounted ? bulbPosition.top : unmountedPosition.top,
         }}
       ></div>
@@ -57,7 +57,7 @@ function Lightbulb({ mounted, unmountedPosition }) {
         parentHandlePointerEvent={handlePin2PointerEvent}
         mounted={mounted}
         unmountedPosition={{
-          left: unmountedPosition.left + bulbRadius,
+          left: unmountedPosition.left,
           top: unmountedPosition.top + bulbRadius * 2,
         }}
       ></Pin>

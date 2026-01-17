@@ -6,7 +6,7 @@ function Line({ position }) {
   const strokeWidth = 8;
 
   return (
-    <svg className="line-svg">
+    <svg className="svg">
         <line
           x1={position.x1}
           x2={position.x2}
