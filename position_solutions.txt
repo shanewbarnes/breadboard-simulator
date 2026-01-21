@@ -1,0 +1,8 @@
+# Solution 1
+## Move the svg totally out of the breadboard and toolbar div
+
+# Solution 2
+## When toolbar is clicked, render new component within breadboard div
+
+# Solution 3
+## Expand toolbar svg to take up entire viewport and change pin position method

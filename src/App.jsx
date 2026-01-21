@@ -11,7 +11,6 @@ function App() {
       <div className="app-container">
         <Toolbar>
           <ComponentContainer Component={Wire}></ComponentContainer>
-          <ComponentContainer Component={Lightbulb}></ComponentContainer>
         </Toolbar>
         <Breadboard></Breadboard>
       </div>

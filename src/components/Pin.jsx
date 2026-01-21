@@ -3,8 +3,13 @@ import { handleDrag, handleDrop, locateNearestTerminal } from "../Utils.jsx";
 import { TerminalContext } from "../Contexts.jsx";
 import "./Pin.css";
 
-function Pin({ parentHandlePointerEvent, mounted, unmountedPosition, inToolbar }) {
-  const pinRef = useRef(null);
+function Pin({
+  parentHandlePointerEvent,
+  mounted,
+  unmountedPosition,
+  inToolbar,
+  pinRef,
+}) {
   /*  TODO: modify this as size changes */
   const pinRadius = useRef(10);
   const [position, setPosition] = useState({
@@ -61,18 +66,22 @@ function Pin({ parentHandlePointerEvent, mounted, unmountedPosition, inToolbar }
         top: nearestPosition.top - pinRadius.current,
       });
 
+      console.log("nearestPosition: ", nearestPosition.left, nearestPosition.top);
+
       if (parentHandlePointerEvent) {
         parentHandlePointerEvent(nearestPosition.left, nearestPosition.top);
       }
     }
   }, [mounted]);
- 
+
   useEffect(() => {
-    pinRadius.current = pinRef.current.offsetWidth / 2;
+    if (pinRef) {
+      pinRadius.current = pinRef.current.offsetWidth / 2;
+    }
   }, []);
 
   useEffect(() => {
-    if (!inToolbar) {
+    if (!inToolbar && pinRef) {
       pinRef.current.style.position = "fixed";
     }
   }, [inToolbar]);
@@ -81,7 +90,9 @@ function Pin({ parentHandlePointerEvent, mounted, unmountedPosition, inToolbar }
     <div
       className="pin"
       style={{
-        left: mounted ? position.left : unmountedPosition.left - pinRadius.current,
+        left: mounted
+          ? position.left
+          : unmountedPosition.left - pinRadius.current,
         top: mounted ? position.top : unmountedPosition.top - pinRadius.current,
       }}
       ref={pinRef}

@@ -11,18 +11,36 @@ function Wire({ mounted, unmountedPosition, inToolbar }) {
     y1: unmountedPosition.top,
     y2: unmountedPosition.top + initialLength,
   });
+  const [wirePosition, setWirePosition] = useState({
+    x1: 0,
+    x2: 0,
+    y1: 0,
+    y2: 0,
+  });
+  const pinRefs = [useRef(null), useRef(null)];
 
   function handlePin1PointerEvent(x, y) {
-    setPosition((position) => ({ ...position, x1: x, y1: y }));
+    //setPosition((position) => ({ ...position, x1: x, y1: y }));
+    console.log("wire: ", x, y);
+    setWirePosition((wirePosition) => ({ ...wirePosition, x1: x, y1: y }));
   }
 
   function handlePin2PointerEvent(x, y) {
-    setPosition((position) => ({ ...position, x2: x, y2: y }));
+    //setPosition((position) => ({ ...position, x2: x, y2: y }));
+    console.log("wire: ", x, y);
+    setWirePosition((wirePosition) => ({ ...wirePosition, x2: x, y2: y }));
   }
 
   useEffect(() => {
     if (!mounted) {
-      setPosition({
+      // setPosition({
+      //   x1: unmountedPosition.left,
+      //   x2: unmountedPosition.left,
+      //   y1: unmountedPosition.top,
+      //   y2: unmountedPosition.top + initialLength,
+      // });
+
+      setWirePosition({
         x1: unmountedPosition.left,
         x2: unmountedPosition.left,
         y1: unmountedPosition.top,
@@ -31,6 +49,17 @@ function Wire({ mounted, unmountedPosition, inToolbar }) {
     }
   }, [unmountedPosition]);
 
+  useEffect(() => {
+    const pinRadius = pinRefs[0].current.offsetWidth / 2;
+
+    setWirePosition({
+      x1: pinRefs[0].current.getBoundingClientRect().left + pinRadius,
+      x2: pinRefs[1].current.getBoundingClientRect().left + pinRadius,
+      y1: pinRefs[0].current.getBoundingClientRect().top + pinRadius,
+      y2: pinRefs[1].current.getBoundingClientRect().top + pinRadius,
+    });
+  }, []);
+
   return (
     <div className="wire-container">
       <Pin
@@ -38,8 +67,9 @@ function Wire({ mounted, unmountedPosition, inToolbar }) {
         mounted={mounted}
         unmountedPosition={unmountedPosition}
         inToolbar={inToolbar}
+        pinRef={pinRefs[0]}
       ></Pin>
-      <Line position={position}></Line>
+      <Line position={wirePosition}></Line>
       <Pin
         parentHandlePointerEvent={handlePin2PointerEvent}
         mounted={mounted}
@@ -48,6 +78,7 @@ function Wire({ mounted, unmountedPosition, inToolbar }) {
           top: unmountedPosition.top + initialLength,
         }}
         inToolbar={inToolbar}
+        pinRef={pinRefs[1]}
       ></Pin>
     </div>
   );
