@@ -2,13 +2,24 @@ import { useState, useRef } from "react";
 import { handleDrag, handleDrop } from "../Utils.jsx";
 import "./ComponentContainer.css";
 
-function ComponentContainer({ Component }) {
-  const [position, setPosition] = useState({ left: 0, top: 0 });
+function ComponentContainer({
+  Component,
+  handleToolbarClick,
+  initialPosition,
+}) {
+  const [position, setPosition] = useState({
+    left: initialPosition.left,
+    top: initialPosition.top,
+  });
   const [mounted, setMounted] = useState(false);
   const documentRef = useRef(document);
 
   function handlePointerDown(e) {
-    handleDrag(e, documentRef, [handlePointerMove, handlePointerUp]);
+    if (handleToolbarClick) {
+      handleToolbarClick(e.clientX, e.clientY);
+    } else {
+      handleDrag(e, documentRef, [handlePointerMove, handlePointerUp]);
+    }
   }
 
   function handlePointerMove(e) {

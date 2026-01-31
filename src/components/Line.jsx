@@ -7,16 +7,16 @@ function Line({ position }) {
 
   return (
     <svg className="svg">
-        <line
-          x1={position.x1}
-          x2={position.x2}
-          y1={position.y1}
-          y2={position.y2}
-          stroke={color}
-          strokeWidth={strokeWidth}
-        />
+      <line
+        x1={position.x1}
+        x2={position.x2}
+        y1={position.y1}
+        y2={position.y2}
+        stroke={color}
+        strokeWidth={strokeWidth}
+      />
     </svg>
-  )
+  );
 }
 
 export default Line;

@@ -24,7 +24,8 @@ export function locateNearestTerminal(clientX, clientY, terminalPositions) {
   terminalPositions.forEach((terminalPosition) => {
     distance =
       ((clientX - terminalPosition.left) ** 2 +
-      (clientY - terminalPosition.top) ** 2) ** 0.5;
+        (clientY - terminalPosition.top) ** 2) **
+      0.5;
 
     if (distance < minDistance) {
       minDistance = distance;

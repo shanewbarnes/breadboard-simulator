@@ -42,13 +42,15 @@ function Lightbulb({ mounted, unmountedPosition }) {
         mounted={mounted}
         unmountedPosition={{
           left: unmountedPosition.left,
-          top: unmountedPosition.top
+          top: unmountedPosition.top,
         }}
       ></Pin>
       <div
         className="lightbulb"
         style={{
-          left: mounted ? bulbPosition.left : unmountedPosition.left - bulbRadius,
+          left: mounted
+            ? bulbPosition.left
+            : unmountedPosition.left - bulbRadius,
           top: mounted ? bulbPosition.top : unmountedPosition.top,
         }}
       ></div>

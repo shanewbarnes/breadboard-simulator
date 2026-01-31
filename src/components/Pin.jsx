@@ -4,8 +4,7 @@ import { TerminalContext } from "../Contexts.jsx";
 import "./Pin.css";
 
 /*  NOTE: maybe split pin into mounted and unmounted types */
-function Pin({ parentHandlePointerEvent, mounted, unmountedPosition }) {
-  const pinRef = useRef(null);
+function Pin({ parentHandlePointerEvent, mounted, unmountedPosition, pinRef }) {
   /*  TODO: modify this as size changes */
   const pinRadius = useRef(10);
   const [position, setPosition] = useState({
@@ -69,14 +68,18 @@ function Pin({ parentHandlePointerEvent, mounted, unmountedPosition }) {
   }, [mounted]);
 
   useEffect(() => {
-    pinRadius.current = pinRef.current.offsetWidth / 2;
+    if (pinRef) {
+      pinRadius.current = pinRef.current.offsetWidth / 2;
+    }
   }, []);
 
   return (
     <div
       className="pin"
       style={{
-        left: mounted ? position.left : unmountedPosition.left - pinRadius.current,
+        left: mounted
+          ? position.left
+          : unmountedPosition.left - pinRadius.current,
         top: mounted ? position.top : unmountedPosition.top - pinRadius.current,
       }}
       ref={pinRef}
