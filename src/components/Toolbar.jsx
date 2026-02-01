@@ -1,4 +1,7 @@
 import "./Toolbar.css";
+import ComponentContainer from "./ComponentContainer.jsx";
+import Wire from "./Wire.jsx";
+import Lightbulb from "./Lightbulb.jsx";
 
 function Toolbar({ children }) {
   return (

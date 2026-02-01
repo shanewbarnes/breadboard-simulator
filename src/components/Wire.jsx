@@ -20,24 +20,15 @@ function Wire({ mounted, unmountedPosition }) {
   const pinRefs = [useRef(null), useRef(null)];
 
   function handlePin1PointerEvent(x, y) {
-    //setPosition((position) => ({ ...position, x1: x, y1: y }));
     setWirePosition((wirePosition) => ({ ...wirePosition, x1: x, y1: y }));
   }
 
   function handlePin2PointerEvent(x, y) {
-    //setPosition((position) => ({ ...position, x2: x, y2: y }));
     setWirePosition((wirePosition) => ({ ...wirePosition, x2: x, y2: y }));
   }
 
   useEffect(() => {
     if (!mounted) {
-      // setPosition({
-      //   x1: unmountedPosition.left,
-      //   x2: unmountedPosition.left,
-      //   y1: unmountedPosition.top,
-      //   y2: unmountedPosition.top + initialLength,
-      // });
-
       setWirePosition({
         x1: unmountedPosition.left,
         x2: unmountedPosition.left,

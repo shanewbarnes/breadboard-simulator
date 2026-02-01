@@ -9,11 +9,11 @@ import Lightbulb from "./components/Lightbulb.jsx";
 function App() {
   const [components, setComponents] = useState([]);
 
-  function handleToolbarClick(clientX, clientY) {
+  function handleToolbarClick(clientX, clientY, Component) {
     setComponents([
       ...components,
       <ComponentContainer
-        Component={Wire}
+        Component={Component}
         initialPosition={{ left: clientX, top: clientY }}
       ></ComponentContainer>,
     ]);

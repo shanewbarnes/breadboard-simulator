@@ -16,7 +16,7 @@ function ComponentContainer({
 
   function handlePointerDown(e) {
     if (handleToolbarClick) {
-      handleToolbarClick(e.clientX, e.clientY);
+      handleToolbarClick(e.clientX, e.clientY, Component);
     } else {
       handleDrag(e, documentRef, [handlePointerMove, handlePointerUp]);
     }
