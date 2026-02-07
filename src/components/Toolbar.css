@@ -5,6 +5,8 @@
 }
 
 .toolbar {
+  --toolbar-width: 100px;
+  --radius: calc(var(--toolbar-width) / 2);
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -12,6 +14,7 @@
   align-items: center;
   background-color: gray;
   height: 60%;
-  width: 100px;
+  width: var(--toolbar-width);
+  border-radius: var(--radius);
   left: 1%;
 }
