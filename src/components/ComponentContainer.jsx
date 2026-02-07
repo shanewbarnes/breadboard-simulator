@@ -32,18 +32,16 @@ function ComponentContainer({
   }
 
   return (
-    <>
-      <div
-        className="component-container"
-        style={{ left: position.left, top: position.top }}
-      >
-        <Component
-          mounted={mounted}
-          unmountedPosition={position}
-          handlePointerDown={handlePointerDown}
-        ></Component>
-      </div>
-    </>
+    <div
+      className="component-container"
+      style={{ left: position.left, top: position.top }}
+    >
+      <Component
+        mounted={mounted}
+        unmountedPosition={position}
+        handlePointerDown={handlePointerDown}
+      ></Component>
+    </div>
   );
 }
 
