@@ -1,15 +1,15 @@
 import { useState, useEffect, useRef } from "react";
+import "./Wire.css";
 import Pin from "./Pin.jsx";
 import Line from "./Line.jsx";
-import "./Wire.css";
+import { INITIAL_WIRE_LENGTH, PIN_RADIUS } from "../constants.js";
 
 function Wire({ mounted, unmountedPosition, handlePointerDown }) {
-  const initialLength = 50;
   const [position, setPosition] = useState({
     x1: unmountedPosition.left,
     x2: unmountedPosition.left,
     y1: unmountedPosition.top,
-    y2: unmountedPosition.top + initialLength,
+    y2: unmountedPosition.top + INITIAL_WIRE_LENGTH,
   });
   const [wirePosition, setWirePosition] = useState({
     x1: 0,
@@ -33,19 +33,17 @@ function Wire({ mounted, unmountedPosition, handlePointerDown }) {
         x1: unmountedPosition.left,
         x2: unmountedPosition.left,
         y1: unmountedPosition.top,
-        y2: unmountedPosition.top + initialLength,
+        y2: unmountedPosition.top + INITIAL_WIRE_LENGTH,
       });
     }
   }, [unmountedPosition]);
 
   useEffect(() => {
-    const pinRadius = pinRefs[0].current.offsetWidth / 2;
-
     setWirePosition({
-      x1: pinRefs[0].current.getBoundingClientRect().left + pinRadius,
-      x2: pinRefs[1].current.getBoundingClientRect().left + pinRadius,
-      y1: pinRefs[0].current.getBoundingClientRect().top + pinRadius,
-      y2: pinRefs[1].current.getBoundingClientRect().top + pinRadius,
+      x1: pinRefs[0].current.getBoundingClientRect().left + PIN_RADIUS,
+      x2: pinRefs[1].current.getBoundingClientRect().left + PIN_RADIUS,
+      y1: pinRefs[0].current.getBoundingClientRect().top + PIN_RADIUS,
+      y2: pinRefs[1].current.getBoundingClientRect().top + PIN_RADIUS,
     });
   }, []);
 
@@ -66,7 +64,7 @@ function Wire({ mounted, unmountedPosition, handlePointerDown }) {
         mounted={mounted}
         unmountedPosition={{
           left: unmountedPosition.left,
-          top: unmountedPosition.top + initialLength,
+          top: unmountedPosition.top + INITIAL_WIRE_LENGTH,
         }}
         pinRef={pinRefs[1]}
       ></Pin>

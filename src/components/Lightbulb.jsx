@@ -3,6 +3,7 @@ import "./Lightbulb.css";
 import "./Wire.css";
 import Pin from "./Pin.jsx";
 import Line from "./Line.jsx";
+import { LIGHTBULB_RADIUS } from "../constants.js";
 
 function Lightbulb({ mounted, unmountedPosition, handlePointerDown }) {
   const [bulbPosition, setBulbPosition] = useState({
@@ -15,7 +16,6 @@ function Lightbulb({ mounted, unmountedPosition, handlePointerDown }) {
     y1: unmountedPosition.top,
     y2: unmountedPosition.top,
   });
-  const bulbRadius = 20;
 
   function handlePin1PointerEvent(x, y) {
     setWirePosition((wirePosition) => ({ ...wirePosition, x1: x, y1: y }));
@@ -30,8 +30,8 @@ function Lightbulb({ mounted, unmountedPosition, handlePointerDown }) {
     let centerY = (wirePosition.y1 + wirePosition.y2) / 2;
 
     setBulbPosition(() => ({
-      left: centerX - bulbRadius,
-      top: centerY - bulbRadius,
+      left: centerX - LIGHTBULB_RADIUS,
+      top: centerY - LIGHTBULB_RADIUS,
     }));
   }, [wirePosition]);
 
@@ -53,7 +53,7 @@ function Lightbulb({ mounted, unmountedPosition, handlePointerDown }) {
         style={{
           left: mounted
             ? bulbPosition.left
-            : unmountedPosition.left - bulbRadius,
+            : unmountedPosition.left - LIGHTBULB_RADIUS,
           top: mounted ? bulbPosition.top : unmountedPosition.top,
         }}
       ></div>
@@ -63,7 +63,7 @@ function Lightbulb({ mounted, unmountedPosition, handlePointerDown }) {
         mounted={mounted}
         unmountedPosition={{
           left: unmountedPosition.left,
-          top: unmountedPosition.top + bulbRadius * 2,
+          top: unmountedPosition.top + LIGHTBULB_RADIUS * 2,
         }}
       ></Pin>
     </div>

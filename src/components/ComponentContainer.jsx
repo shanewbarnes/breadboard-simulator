@@ -1,21 +1,28 @@
 import { useState, useRef } from "react";
-import { handleDrag, handleDrop } from "../Utils.jsx";
+import { handleDrag, handleDrop } from "../utils.js";
 import "./ComponentContainer.css";
+import {
+  COMPONENT_CONTAINER_HEIGHT,
+  INITIAL_WIRE_LENGTH,
+} from "../constants.js";
 
 function ComponentContainer({
   Component,
   handleToolbarClick,
   initialPosition,
 }) {
+  const centerAdjustment =
+    COMPONENT_CONTAINER_HEIGHT / 2 - INITIAL_WIRE_LENGTH / 2;
+  const inToolbar = handleToolbarClick !== undefined;
   const [position, setPosition] = useState({
     left: initialPosition.left,
-    top: initialPosition.top,
+    top: initialPosition.top + (inToolbar ? centerAdjustment : 0),
   });
   const [mounted, setMounted] = useState(false);
   const documentRef = useRef(document);
 
   function handlePointerDown(e) {
-    if (handleToolbarClick) {
+    if (inToolbar) {
       handleToolbarClick(e.clientX, e.clientY, Component);
     } else {
       handleDrag(e, documentRef, [handlePointerMove, handlePointerUp]);

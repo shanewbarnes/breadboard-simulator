@@ -1,12 +1,10 @@
 import { useState, useRef, useEffect, useContext } from "react";
-import { handleDrag, handleDrop, locateNearestTerminal } from "../Utils.jsx";
-import { TerminalContext } from "../Contexts.jsx";
+import { handleDrag, handleDrop, locateNearestTerminal } from "../utils.js";
 import "./Pin.css";
+import { TerminalContext } from "../Contexts.jsx";
+import { PIN_RADIUS } from "../constants.js";
 
-/*  NOTE: maybe split pin into mounted and unmounted types */
 function Pin({ parentHandlePointerEvent, mounted, unmountedPosition, pinRef }) {
-  /*  TODO: modify this as size changes */
-  const pinRadius = useRef(10);
   const [position, setPosition] = useState({
     left: unmountedPosition.left,
     top: unmountedPosition.top,
@@ -20,8 +18,8 @@ function Pin({ parentHandlePointerEvent, mounted, unmountedPosition, pinRef }) {
 
   function handlePointerMove(e) {
     setPosition({
-      left: e.clientX - pinRadius.current,
-      top: e.clientY - pinRadius.current,
+      left: e.clientX - PIN_RADIUS,
+      top: e.clientY - PIN_RADIUS,
     });
 
     if (parentHandlePointerEvent) {
@@ -37,8 +35,8 @@ function Pin({ parentHandlePointerEvent, mounted, unmountedPosition, pinRef }) {
     );
 
     setPosition({
-      left: nearestPosition.left - pinRadius.current,
-      top: nearestPosition.top - pinRadius.current,
+      left: nearestPosition.left - PIN_RADIUS,
+      top: nearestPosition.top - PIN_RADIUS,
     });
 
     if (parentHandlePointerEvent) {
@@ -57,8 +55,8 @@ function Pin({ parentHandlePointerEvent, mounted, unmountedPosition, pinRef }) {
       );
 
       setPosition({
-        left: nearestPosition.left - pinRadius.current,
-        top: nearestPosition.top - pinRadius.current,
+        left: nearestPosition.left - PIN_RADIUS,
+        top: nearestPosition.top - PIN_RADIUS,
       });
 
       if (parentHandlePointerEvent) {
@@ -67,20 +65,12 @@ function Pin({ parentHandlePointerEvent, mounted, unmountedPosition, pinRef }) {
     }
   }, [mounted]);
 
-  useEffect(() => {
-    if (pinRef) {
-      pinRadius.current = pinRef.current.offsetWidth / 2;
-    }
-  }, []);
-
   return (
     <div
       className="pin"
       style={{
-        left: mounted
-          ? position.left
-          : unmountedPosition.left - pinRadius.current,
-        top: mounted ? position.top : unmountedPosition.top - pinRadius.current,
+        left: mounted ? position.left : unmountedPosition.left - PIN_RADIUS,
+        top: mounted ? position.top : unmountedPosition.top - PIN_RADIUS,
       }}
       ref={pinRef}
       onPointerDown={mounted ? handlePointerDown : null}

@@ -1,6 +1,3 @@
-.clickbox {
-  display: contents;
-  position: absolute;
-  height: 50px;
-  width: 50px;
+.component-container {
+  height: 120px;
 }
