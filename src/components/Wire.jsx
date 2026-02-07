@@ -3,7 +3,7 @@ import Pin from "./Pin.jsx";
 import Line from "./Line.jsx";
 import "./Wire.css";
 
-function Wire({ mounted, unmountedPosition }) {
+function Wire({ mounted, unmountedPosition, handlePointerDown }) {
   const initialLength = 50;
   const [position, setPosition] = useState({
     x1: unmountedPosition.left,
@@ -50,7 +50,10 @@ function Wire({ mounted, unmountedPosition }) {
   }, []);
 
   return (
-    <div className="wire-container">
+    <div
+      className="wire-container"
+      onPointerDown={!mounted ? handlePointerDown : null}
+    >
       <Pin
         parentHandlePointerEvent={handlePin1PointerEvent}
         mounted={mounted}

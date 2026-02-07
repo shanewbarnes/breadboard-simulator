@@ -4,7 +4,7 @@ import "./Wire.css";
 import Pin from "./Pin.jsx";
 import Line from "./Line.jsx";
 
-function Lightbulb({ mounted, unmountedPosition }) {
+function Lightbulb({ mounted, unmountedPosition, handlePointerDown }) {
   const [bulbPosition, setBulbPosition] = useState({
     left: unmountedPosition.left,
     top: unmountedPosition.top,
@@ -36,7 +36,10 @@ function Lightbulb({ mounted, unmountedPosition }) {
   }, [wirePosition]);
 
   return (
-    <div className="lightbulb-container">
+    <div
+      className="lightbulb-container"
+      onPointerDown={!mounted ? handlePointerDown : null}
+    >
       <Pin
         parentHandlePointerEvent={handlePin1PointerEvent}
         mounted={mounted}
