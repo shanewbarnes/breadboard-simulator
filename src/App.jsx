@@ -2,42 +2,40 @@ import { useState } from "react";
 import "./App.css";
 import Breadboard from "./components/Breadboard.jsx";
 import Toolbar from "./components/Toolbar.jsx";
-import ComponentContainer from "./components/ComponentContainer.jsx";
+import ToolContainer from "./components/ToolContainer.jsx";
 import Wire from "./components/Wire.jsx";
 import Lightbulb from "./components/Lightbulb.jsx";
 
 function App() {
-  const [components, setComponents] = useState([]);
+  const [tools, setTools] = useState([]);
 
-  function handleToolbarClick(clientX, clientY, Component) {
-    setComponents([
-      ...components,
-      <ComponentContainer
-        Component={Component}
+  function handleToolbarClick(clientX, clientY, Tool) {
+    setTools([
+      ...tools,
+      <ToolContainer
+        Tool={Tool}
         initialPosition={{ left: clientX, top: clientY }}
-      ></ComponentContainer>,
+      ></ToolContainer>,
     ]);
   }
 
   return (
-    <>
-      <div className="app-container">
-        <Toolbar>
-          <ComponentContainer
-            Component={Wire}
-            handleToolbarClick={handleToolbarClick}
-            initialPosition={{ left: 0, top: 0 }}
-          ></ComponentContainer>
-          <ComponentContainer
-            Component={Lightbulb}
-            handleToolbarClick={handleToolbarClick}
-            initialPosition={{ left: 0, top: 0 }}
-          ></ComponentContainer>
-        </Toolbar>
-        {components}
-        <Breadboard></Breadboard>
-      </div>
-    </>
+    <div className="app-container">
+      <Toolbar>
+        <ToolContainer
+          Tool={Wire}
+          handleToolbarClick={handleToolbarClick}
+          initialPosition={{ left: 0, top: 0 }}
+        ></ToolContainer>
+        <ToolContainer
+          Tool={Lightbulb}
+          handleToolbarClick={handleToolbarClick}
+          initialPosition={{ left: 0, top: 0 }}
+        ></ToolContainer>
+      </Toolbar>
+      {tools}
+      <Breadboard></Breadboard>
+    </div>
   );
 }
 

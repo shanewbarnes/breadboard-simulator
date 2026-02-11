@@ -1,18 +1,18 @@
 import { useState, useRef } from "react";
 import { handleDrag, handleDrop } from "../utils.js";
-import "./ComponentContainer.css";
+import "./ToolContainer.css";
 import {
-  COMPONENT_CONTAINER_HEIGHT,
+  TOOL_CONTAINER_HEIGHT,
   INITIAL_WIRE_LENGTH,
 } from "../constants.js";
 
-function ComponentContainer({
-  Component,
+function ToolContainer({
+  Tool,
   handleToolbarClick,
   initialPosition,
 }) {
   const centerAdjustment =
-    COMPONENT_CONTAINER_HEIGHT / 2 - INITIAL_WIRE_LENGTH / 2;
+    TOOL_CONTAINER_HEIGHT / 2 - INITIAL_WIRE_LENGTH / 2;
   const inToolbar = handleToolbarClick !== undefined;
   const [position, setPosition] = useState({
     left: initialPosition.left,
@@ -23,7 +23,7 @@ function ComponentContainer({
 
   function handlePointerDown(e) {
     if (inToolbar) {
-      handleToolbarClick(e.clientX, e.clientY, Component);
+      handleToolbarClick(e.clientX, e.clientY, Tool);
     } else {
       handleDrag(e, documentRef, [handlePointerMove, handlePointerUp]);
     }
@@ -40,16 +40,16 @@ function ComponentContainer({
 
   return (
     <div
-      className="component-container"
+      className="tool-container"
       style={{ left: position.left, top: position.top }}
     >
-      <Component
+      <Tool
         mounted={mounted}
         unmountedPosition={position}
         handlePointerDown={handlePointerDown}
-      ></Component>
+      ></Tool>
     </div>
   );
 }
 
-export default ComponentContainer;
+export default ToolContainer;
