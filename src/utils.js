@@ -4,7 +4,9 @@ export function handleDrag(
   [handlePointerMove, handlePointerUp],
 ) {
   //  NOTE: preventDefault ensures that pointerup event fires
-  e.preventDefault();
+  if (e) {
+    e.preventDefault();
+  }
 
   documentRef.current.addEventListener("pointermove", handlePointerMove);
   documentRef.current.addEventListener("pointerup", handlePointerUp);
@@ -20,7 +22,6 @@ export function locateNearestTerminal(clientX, clientY, terminalPositions) {
   let minDistance = Infinity;
   let nearestPosition;
 
-  //  BUG: sometimes this does not find the closest terminal
   terminalPositions.forEach((terminalPosition) => {
     distance =
       ((clientX - terminalPosition.left) ** 2 +

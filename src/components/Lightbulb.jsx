@@ -5,7 +5,7 @@ import Pin from "./Pin.jsx";
 import Line from "./Line.jsx";
 import { LIGHTBULB_RADIUS } from "../constants.js";
 
-function Lightbulb({ mounted, unmountedPosition, handlePointerDown }) {
+function Lightbulb({ mounted, unmountedPosition, parentHandlePointerDown }) {
   const [bulbPosition, setBulbPosition] = useState({
     left: unmountedPosition.left,
     top: unmountedPosition.top,
@@ -38,7 +38,7 @@ function Lightbulb({ mounted, unmountedPosition, handlePointerDown }) {
   return (
     <div
       className="lightbulb-container"
-      onPointerDown={!mounted ? handlePointerDown : null}
+      onPointerDown={!mounted ? parentHandlePointerDown : null}
     >
       <Pin
         parentHandlePointerEvent={handlePin1PointerEvent}
