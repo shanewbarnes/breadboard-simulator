@@ -65,12 +65,21 @@ function Pin({ parentHandlePointerEvent, mounted, unmountedPosition, pinRef }) {
     }
   }, [mounted]);
 
+  useEffect(() => {
+    if (!mounted) {
+      setPosition({
+        left: unmountedPosition.left - PIN_RADIUS,
+        top: unmountedPosition.top - PIN_RADIUS,
+      });
+    }
+  }, [unmountedPosition]);
+
   return (
     <div
       className="pin"
       style={{
-        left: mounted ? position.left : unmountedPosition.left - PIN_RADIUS,
-        top: mounted ? position.top : unmountedPosition.top - PIN_RADIUS,
+        left: position.left,
+        top: position.top,
       }}
       ref={pinRef}
       onPointerDown={mounted ? handlePointerDown : null}

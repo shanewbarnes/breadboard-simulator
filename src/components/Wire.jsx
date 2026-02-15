@@ -2,15 +2,9 @@ import { useState, useEffect, useRef } from "react";
 import "./Wire.css";
 import Pin from "./Pin.jsx";
 import Line from "./Line.jsx";
-import { INITIAL_WIRE_LENGTH, PIN_RADIUS } from "../constants.js";
+import { INITIAL_WIRE_LENGTH } from "../constants.js";
 
 function Wire({ mounted, unmountedPosition, parentHandlePointerDown }) {
-  const [position, setPosition] = useState({
-    x1: unmountedPosition.left,
-    x2: unmountedPosition.left,
-    y1: unmountedPosition.top,
-    y2: unmountedPosition.top + INITIAL_WIRE_LENGTH,
-  });
   const [wirePosition, setWirePosition] = useState({
     x1: 0,
     x2: 0,
@@ -40,10 +34,10 @@ function Wire({ mounted, unmountedPosition, parentHandlePointerDown }) {
 
   useEffect(() => {
     setWirePosition({
-      x1: pinRefs[0].current.getBoundingClientRect().left + PIN_RADIUS,
-      x2: pinRefs[1].current.getBoundingClientRect().left + PIN_RADIUS,
-      y1: pinRefs[0].current.getBoundingClientRect().top + PIN_RADIUS,
-      y2: pinRefs[1].current.getBoundingClientRect().top + PIN_RADIUS,
+      x1: pinRefs[0].current.getBoundingClientRect().left,
+      x2: pinRefs[1].current.getBoundingClientRect().left,
+      y1: pinRefs[0].current.getBoundingClientRect().top,
+      y2: pinRefs[1].current.getBoundingClientRect().top,
     });
   }, []);
 

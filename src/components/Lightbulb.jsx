@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import "./Lightbulb.css";
 import "./Wire.css";
 import Pin from "./Pin.jsx";
@@ -16,6 +16,7 @@ function Lightbulb({ mounted, unmountedPosition, parentHandlePointerDown }) {
     y1: unmountedPosition.top,
     y2: unmountedPosition.top,
   });
+  const pinRefs = [useRef(null), useRef(null)];
 
   function handlePin1PointerEvent(x, y) {
     setWirePosition((wirePosition) => ({ ...wirePosition, x1: x, y1: y }));
@@ -35,6 +36,13 @@ function Lightbulb({ mounted, unmountedPosition, parentHandlePointerDown }) {
     }));
   }, [wirePosition]);
 
+  useEffect(() => {
+    setBulbPosition({
+      left: unmountedPosition.left - LIGHTBULB_RADIUS,
+      top: unmountedPosition.top,
+    });
+  }, [unmountedPosition]);
+
   return (
     <div
       className="lightbulb-container"
@@ -47,14 +55,13 @@ function Lightbulb({ mounted, unmountedPosition, parentHandlePointerDown }) {
           left: unmountedPosition.left,
           top: unmountedPosition.top,
         }}
+        pinRef={pinRefs[0]}
       ></Pin>
       <div
         className="lightbulb"
         style={{
-          left: mounted
-            ? bulbPosition.left
-            : unmountedPosition.left - LIGHTBULB_RADIUS,
-          top: mounted ? bulbPosition.top : unmountedPosition.top,
+          left: bulbPosition.left,
+          top: bulbPosition.top,
         }}
       ></div>
       <Line position={wirePosition}></Line>
@@ -65,6 +72,7 @@ function Lightbulb({ mounted, unmountedPosition, parentHandlePointerDown }) {
           left: unmountedPosition.left,
           top: unmountedPosition.top + LIGHTBULB_RADIUS * 2,
         }}
+        pinRef={pinRefs[1]}
       ></Pin>
     </div>
   );
