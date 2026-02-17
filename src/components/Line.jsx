@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import "./Line.css";
 
-function Line({ position }) {
-  const color = "red";
+function Line({ position, color }) {
   const strokeWidth = 8;
 
   return (

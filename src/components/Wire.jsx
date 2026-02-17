@@ -52,7 +52,8 @@ function Wire({ mounted, unmountedPosition, parentHandlePointerDown }) {
         unmountedPosition={unmountedPosition}
         pinRef={pinRefs[0]}
       ></Pin>
-      <Line position={wirePosition}></Line>
+      <Line position={wirePosition}
+            color={"red"}></Line>
       <Pin
         parentHandlePointerEvent={handlePin2PointerEvent}
         mounted={mounted}

@@ -64,7 +64,8 @@ function Lightbulb({ mounted, unmountedPosition, parentHandlePointerDown }) {
           top: bulbPosition.top,
         }}
       ></div>
-      <Line position={wirePosition}></Line>
+      <Line position={wirePosition}
+            color={"black"}></Line>
       <Pin
         parentHandlePointerEvent={handlePin2PointerEvent}
         mounted={mounted}
