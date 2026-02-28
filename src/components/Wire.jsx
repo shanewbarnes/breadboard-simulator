@@ -6,10 +6,10 @@ import { INITIAL_WIRE_LENGTH } from "../constants.js";
 
 function Wire({ mounted, unmountedPosition, parentHandlePointerDown }) {
   const [wirePosition, setWirePosition] = useState({
-    x1: 0,
-    x2: 0,
-    y1: 0,
-    y2: 0,
+    x1: unmountedPosition.left,
+    x2: unmountedPosition.left,
+    y1: unmountedPosition.top,
+    y2: unmountedPosition.top,
   });
   const pinRefs = [useRef(null), useRef(null)];
 
