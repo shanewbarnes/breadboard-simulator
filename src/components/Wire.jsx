@@ -12,13 +12,56 @@ function Wire({ mounted, unmountedPosition, parentHandlePointerDown }) {
     y2: unmountedPosition.top,
   });
   const pinRefs = [useRef(null), useRef(null)];
+  const wireTerminals = [useRef(null), useRef(null)];
 
-  function handlePin1PointerEvent(x, y) {
-    setWirePosition((wirePosition) => ({ ...wirePosition, x1: x, y1: y }));
+  function handlePin1PointerEvent(e) {
+    if (e.terminal) {
+      const terminal = e;
+
+      setWirePosition((wirePosition) => ({
+        ...wirePosition,
+        x1: terminal.terminal.position.left,
+        y1: terminal.terminal.position.top,
+      }));
+
+      wireTerminals[0].current = terminal;
+      
+      if (wireTerminals[1].current) {
+        terminal.terminal.handleNeighbor(wireTerminals[1].current);
+        wireTerminals[1].current.terminal.handleNeighbor(terminal);
+      }
+    } else {
+      setWirePosition((wirePosition) => ({
+        ...wirePosition,
+        x1: e.position.left,
+        y1: e.position.top,
+      }));
+    }
   }
 
-  function handlePin2PointerEvent(x, y) {
-    setWirePosition((wirePosition) => ({ ...wirePosition, x2: x, y2: y }));
+  function handlePin2PointerEvent(e) {
+    if (e.terminal) {
+      const terminal = e;
+
+      setWirePosition((wirePosition) => ({
+        ...wirePosition,
+        x2: terminal.terminal.position.left,
+        y2: terminal.terminal.position.top,
+      }));
+
+      wireTerminals[1].current = terminal;
+
+      if (wireTerminals[0].current) {
+        terminal.terminal.handleNeighbor(wireTerminals[0].current);
+        wireTerminals[0].current.terminal.handleNeighbor(terminal);
+      }
+    } else {
+      setWirePosition((wirePosition) => ({
+        ...wirePosition,
+        x2: e.position.left,
+        y2: e.position.top,
+      }));
+    }
   }
 
   useEffect(() => {
@@ -52,8 +95,7 @@ function Wire({ mounted, unmountedPosition, parentHandlePointerDown }) {
         unmountedPosition={unmountedPosition}
         pinRef={pinRefs[0]}
       ></Pin>
-      <Line position={wirePosition}
-            color={"red"}></Line>
+      <Line position={wirePosition} color={"red"}></Line>
       <Pin
         parentHandlePointerEvent={handlePin2PointerEvent}
         mounted={mounted}

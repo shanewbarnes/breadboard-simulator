@@ -1,3 +1,3 @@
 import { createContext } from "react";
 
-export const TerminalContext = createContext(new Set());
+export const TerminalContext = createContext(new Map());

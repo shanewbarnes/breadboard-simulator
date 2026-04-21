@@ -17,14 +17,57 @@ function Resistor({ mounted, unmountedPosition, parentHandlePointerDown }) {
     y2: unmountedPosition.top,
   });
   const pinRefs = [useRef(null), useRef(null)];
+  const wireTerminals = [useRef(null), useRef(null)];
   const resistorHeight = 25;
 
-  function handlePin1PointerEvent(x, y) {
-    setWirePosition((wirePosition) => ({ ...wirePosition, x1: x, y1: y }));
+  function handlePin1PointerEvent(e) {
+    if (e.terminal) {
+      const terminal = e;
+
+      setWirePosition((wirePosition) => ({
+        ...wirePosition,
+        x1: terminal.terminal.position.left,
+        y1: terminal.terminal.position.top,
+      }));
+
+      wireTerminals[0].current = terminal;
+      
+      if (wireTerminals[1].current) {
+        terminal.terminal.handleNeighbor(wireTerminals[1].current);
+        wireTerminals[1].current.terminal.handleNeighbor(terminal);
+      }
+    } else {
+      setWirePosition((wirePosition) => ({
+        ...wirePosition,
+        x1: e.position.left,
+        y1: e.position.top,
+      }));
+    }
   }
 
-  function handlePin2PointerEvent(x, y) {
-    setWirePosition((wirePosition) => ({ ...wirePosition, x2: x, y2: y }));
+  function handlePin2PointerEvent(e) {
+    if (e.terminal) {
+      const terminal = e;
+
+      setWirePosition((wirePosition) => ({
+        ...wirePosition,
+        x2: terminal.terminal.position.left,
+        y2: terminal.terminal.position.top,
+      }));
+
+      wireTerminals[1].current = terminal;
+
+      if (wireTerminals[0].current) {
+        terminal.terminal.handleNeighbor(wireTerminals[0].current);
+        wireTerminals[0].current.terminal.handleNeighbor(terminal);
+      }
+    } else {
+      setWirePosition((wirePosition) => ({
+        ...wirePosition,
+        x2: e.position.left,
+        y2: e.position.top,
+      }));
+    }
   }
 
   useEffect(() => {
@@ -33,12 +76,12 @@ function Resistor({ mounted, unmountedPosition, parentHandlePointerDown }) {
 
     let dx = wirePosition.x2 - wirePosition.x1;
     let dy = wirePosition.y2 - wirePosition.y1;
-    let lineAngle = (Math.atan2(dy, dx) * (180 / Math.PI)) + 90;
-    let lineLength = ((dx ** 2) + (dy ** 2)) ** .5
+    let lineAngle = Math.atan2(dy, dx) * (180 / Math.PI) + 90;
+    let lineLength = (dx ** 2 + dy ** 2) ** 0.5;
 
     setResistorPosition({
-      left: centerX + (((INITIAL_WIRE_LENGTH / 2) * dx) / lineLength),
-      top: centerY + (((INITIAL_WIRE_LENGTH / 2) * dy) / lineLength),
+      left: centerX + ((INITIAL_WIRE_LENGTH / 2) * dx) / lineLength,
+      top: centerY + ((INITIAL_WIRE_LENGTH / 2) * dy) / lineLength,
     });
 
     setResistorAngle(lineAngle);
@@ -54,9 +97,11 @@ function Resistor({ mounted, unmountedPosition, parentHandlePointerDown }) {
   }, [unmountedPosition]);
 
   return (
-    <div className="resistor-container"
-         onPointerDown={!mounted ? parentHandlePointerDown : null}>
-      {mounted && 
+    <div
+      className="resistor-container"
+      onPointerDown={!mounted ? parentHandlePointerDown : null}
+    >
+      {mounted && (
         <>
           <Pin
             parentHandlePointerEvent={handlePin1PointerEvent}
@@ -64,8 +109,7 @@ function Resistor({ mounted, unmountedPosition, parentHandlePointerDown }) {
             unmountedPosition={unmountedPosition}
             pinRef={pinRefs[0]}
           ></Pin>
-          <Line position={wirePosition}
-                color={"black"}></Line>
+          <Line position={wirePosition} color={"black"}></Line>
           <Pin
             parentHandlePointerEvent={handlePin2PointerEvent}
             mounted={mounted}
@@ -76,13 +120,15 @@ function Resistor({ mounted, unmountedPosition, parentHandlePointerDown }) {
             pinRef={pinRefs[1]}
           ></Pin>
         </>
-      }
-      <div className="resistor"
-           style={{
-             left: resistorPosition.left,
-             top: resistorPosition.top,
-             transform: `rotate(${resistorAngle}deg)`
-           }}>
+      )}
+      <div
+        className="resistor"
+        style={{
+          left: resistorPosition.left,
+          top: resistorPosition.top,
+          transform: `rotate(${resistorAngle}deg)`,
+        }}
+      >
         <div className="resistor-ball">
           <div className="resistor-strip blue"></div>
         </div>
@@ -90,8 +136,7 @@ function Resistor({ mounted, unmountedPosition, parentHandlePointerDown }) {
           <div className="resistor-strip black"></div>
           <div className="resistor-strip red"></div>
         </div>
-        <div className="resistor-ball"
-             style={{ top: resistorHeight }}>
+        <div className="resistor-ball" style={{ top: resistorHeight }}>
           <div className="resistor-strip red"></div>
         </div>
       </div>

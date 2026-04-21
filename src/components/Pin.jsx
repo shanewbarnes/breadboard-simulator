@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useContext } from "react";
-import { handleDrag, handleDrop, locateNearestTerminal } from "../utils.js";
+import { handleDrag, handleDrop, locateNearestTerminal, search } from "../utils.js";
 import "./Pin.css";
 import { TerminalContext } from "../Contexts.jsx";
 import { PIN_RADIUS } from "../constants.js";
@@ -10,9 +10,12 @@ function Pin({ parentHandlePointerEvent, mounted, unmountedPosition, pinRef }) {
     top: unmountedPosition.top,
   });
   const documentRef = useRef(document);
-  const terminalPositions = useContext(TerminalContext);
+  const terminals = useContext(TerminalContext);
+  const [terminal, setTerminal] = useState(null);
 
   function handlePointerDown(e) {
+    terminal.handleSignal(false);
+    terminal.handleNeighbor(null);
     handleDrag(e, documentRef, [handlePointerMove, handlePointerUp]);
   }
 
@@ -23,46 +26,51 @@ function Pin({ parentHandlePointerEvent, mounted, unmountedPosition, pinRef }) {
     });
 
     if (parentHandlePointerEvent) {
-      parentHandlePointerEvent(e.clientX, e.clientY);
+      parentHandlePointerEvent({ position: { left: e.clientX, top: e.clientY } });
     }
   }
 
   function handlePointerUp(e) {
-    const nearestPosition = locateNearestTerminal(
+    const nearestTerminal = locateNearestTerminal(
       e.clientX,
       e.clientY,
-      terminalPositions,
+      terminals,
     );
 
     setPosition({
-      left: nearestPosition.left - PIN_RADIUS,
-      top: nearestPosition.top - PIN_RADIUS,
+      left: nearestTerminal.terminal.position.left - PIN_RADIUS,
+      top: nearestTerminal.terminal.position.top - PIN_RADIUS,
     });
 
     if (parentHandlePointerEvent) {
-      parentHandlePointerEvent(nearestPosition.left, nearestPosition.top);
+      parentHandlePointerEvent(nearestTerminal);
     }
 
     handleDrop(documentRef, [handlePointerMove, handlePointerUp]);
+
+    setTerminal(terminals.get(nearestTerminal.id));
   }
 
   useEffect(() => {
     if (mounted) {
-      const nearestPosition = locateNearestTerminal(
+      const nearestTerminal = locateNearestTerminal(
         unmountedPosition.left,
         unmountedPosition.top,
-        terminalPositions,
+        terminals,
       );
 
       setPosition({
-        left: nearestPosition.left - PIN_RADIUS,
-        top: nearestPosition.top - PIN_RADIUS,
+        left: nearestTerminal.terminal.position.left - PIN_RADIUS,
+        top: nearestTerminal.terminal.position.top - PIN_RADIUS,
       });
 
       if (parentHandlePointerEvent) {
-        parentHandlePointerEvent(nearestPosition.left, nearestPosition.top);
+        parentHandlePointerEvent(nearestTerminal);
       }
+      
+      setTerminal(terminals.get(nearestTerminal.id));
     }
+    
   }, [mounted]);
 
   useEffect(() => {
@@ -73,6 +81,12 @@ function Pin({ parentHandlePointerEvent, mounted, unmountedPosition, pinRef }) {
       });
     }
   }, [unmountedPosition]);
+  
+  useEffect(() => {
+    if (mounted) {
+      search(terminals);
+    }
+  }, [terminal]);
 
   return (
     <div
