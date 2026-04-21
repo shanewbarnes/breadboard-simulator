@@ -1,0 +1,5 @@
+const TOOLS_HEIGHT = 40;
+export const PIN_RADIUS = 10;
+export const LIGHTBULB_RADIUS = TOOLS_HEIGHT / 2;
+export const INITIAL_WIRE_LENGTH = TOOLS_HEIGHT;
+export const TOOL_CONTAINER_HEIGHT = 120;

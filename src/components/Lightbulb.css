@@ -1,0 +1,11 @@
+.lightbulb-container {
+  position: absolute;
+}
+
+.lightbulb {
+  position: absolute;
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  z-index: 1;
+}

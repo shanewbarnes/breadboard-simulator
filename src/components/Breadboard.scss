@@ -1,0 +1,143 @@
+$breadboard-color: gray;
+$terminal-label-height-width: 6px;
+$breadboard-width: 1000px;
+$breadboard-height: calc($breadboard-width / 3);
+
+.breadboard-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+}
+
+.breadboard {
+  display: flex;
+  flex-direction: column;
+  background-color: $breadboard-color;
+  width: $breadboard-width;
+  height: $breadboard-height;
+  border-radius: 3px;
+}
+
+.outer-bus-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 17.4%;
+}
+
+.charge-symbols {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  /*  TODO: check this proportion */
+  width: 3%;
+}
+
+.charge-symbol {
+  transform: rotate(90deg);
+  font-family: arial;
+  /*  TODO: make this a percentage of div size */
+  font-size: 22px;
+}
+
+hr {
+  margin: 0;
+}
+
+.inner-bus-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /*  TODO: check both of these percentages */
+  height: 70%;
+  width: 94%;
+}
+
+.bus-strips {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 100%;
+}
+
+.bus-strip {
+  display: flex;
+  flex-direction: row;
+}
+
+.bus-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  /*  TODO: check this against full size breadboard */
+  width: 16.4%;
+}
+
+.teriminal-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.terminal-strips {
+  display: flex;
+  flex-direction: row;
+  height: 30.8%;
+}
+
+.terminal-strip {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+}
+
+.number {
+  transform: rotate(270deg);
+  font-family: helvetica;
+  font-size: 0.7em;
+  height: $terminal-label-height-width;
+  line-height: 50%;
+}
+
+.letters {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.letter {
+  transform: rotate(270deg);
+  font-family: helvetica;
+  font-size: 0.6em;
+  height: $terminal-label-height-width;
+  line-height: 60%;
+}
+
+.terminal {
+  background-color: black;
+  /*  TODO: maybe make these percentages of div size */
+  width: $terminal-label-height-width;
+  height: $terminal-label-height-width;
+}
+
+.spacer {
+  width: $terminal-label-height-width;
+  height: $terminal-label-height-width;
+}
+
+#divider {
+  height: 3.6%;
+  background-color: black;
+}
+
+.text {
+  user-select: none;
+}

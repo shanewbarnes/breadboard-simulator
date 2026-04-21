@@ -1,0 +1,19 @@
+.toolbar-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.toolbar {
+  --toolbar-width: 100px;
+  --radius: calc(var(--toolbar-width) / 2);
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  background-color: gray;
+  width: var(--toolbar-width);
+  border-radius: var(--radius);
+  left: 1%;
+}

@@ -1,0 +1,54 @@
+.resistor-container {
+  position: absolute;
+}
+
+.resistor1 {
+  position: absolute;
+}
+
+.resistor {
+  --resistor-color: tan;
+  --resistor-ball-radius: 7px;
+  --resistor-height: calc(--resistor-ball-radius + 25px);
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  z-index: 3;
+}
+
+.resistor-ball {
+  position: absolute;
+  background-color: var(--resistor-color);
+  height: calc(var(--resistor-ball-radius) * 2);
+  width: calc(var(--resistor-ball-radius) * 2);
+  border-radius: 50%;
+}
+
+.resistor-middle {
+  position: absolute;
+  background-color: var(--resistor-color);
+  top: var(--resistor-ball-radius);
+  height: 25px;
+  width: 10px;
+}
+
+.resistor-strip {
+  position: relative;
+  height: 3px;
+  z-index: 4;
+}
+
+.black {
+  background-color: black;
+  top: 33%;
+}
+
+.red {
+  background-color: red;
+  top: 50%;
+}
+
+.blue {
+  background-color: blue;
+  top: 50%;
+}
